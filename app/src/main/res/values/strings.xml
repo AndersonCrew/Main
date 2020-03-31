@@ -1,0 +1,79 @@
+<resources>
+    <string name="app_name">CrewWorks</string> <!-- CrewWorks -->
+
+    <!-- Common -->
+    <string name="common_alert_dialog_install">설치</string>
+    <string name="common_alert_dialog_no">아니요</string>
+
+    <!-- IntroActivity -->
+    <string name="introActivity_message_permission_denied">권한 사용에 동의하시지 않으면 앱을 사용하실 수 없습니다.</string>
+    <string name="string_update_content">This new version exists. Would you like to install? </string>
+
+    <!-- LoginActivity -->
+
+    <string name="loginActivity_message_wrong_server_site">서버에 접속할 수 없습니다.</string>
+
+
+    <!-- MainActivity -->
+    <string name="navigation_drawer_open">navigation_drawer_open</string>
+    <string name="navigation_drawer_close">navigation_drawer_close</string>
+    <string name="start_sep_title_mobileService">Mobile services</string>
+    <string name="start_sep_title_approval">Approval</string>
+    <string name="start_sep_title_email">Unread mail</string>
+    <string name="start_sep_title_schedule">Schedule</string>
+    <string name="start_sep_title_notice">Notice</string>
+    <string name="mainActivity_message_exit">\'뒤로\' 버튼을 한번 더 누르시면 종료됩니다.</string>
+    <string name="mailActivity_message_download_apk">Downloading the installer file.\nPlease wait.</string>
+    <string name="mailActivity_message_install_apk">%s 앱이 설치되어 있지 않습니다.\n지금 설치하시겠습니까?</string>
+
+
+    <!-- MainActivity -->
+    <string name="loading_content">Please wait.</string>
+    <string name="string_ok">OK</string>
+    <string name="app_name_crewchat">CrewChat</string>
+
+    <!-- Login activity -->
+    <string name="sign_up_suggest">Haven\'t you your Group(Company) ID yet?</string>
+    <string name="string_sign_up">Create a new Group(Company)</string>
+    <string name="login_password">Password</string>
+    <string name="login_username">Personal ID</string>
+    <string name="string_server_site">Group(Company) ID</string>
+    <string name="login_login">Log In</string>
+
+    <string name="login_button_yes">Yes</string>
+    <string name="login_button_no">No</string>
+    <string name="connection_falsed">Can not connect the above address </string>
+    <string name="login_empty_input">cannot be empty</string>
+    <string name="are_you_sure_loguot">Are you sure you want to logout?</string>
+    <string name="auto_login_button_yes">Yes</string>
+    <string name="auto_login_button_no">No</string>
+
+    <string name="about">About</string>
+    <string name="user_version">User Version</string>
+    <string name="lastest_version">Latest Version</string>
+    <string name="confirm">Confirm</string>
+    <string name="no_network_error">Can Not Connect To Server</string>
+    <string name="file_not_found_error">File Not Found</string>
+    <string name="can_not_check_version">Can not check the version on sever</string>
+    <string name="setting_notification_from_time">AM 08:00</string>
+    <string name="setting_notification_to_time">PM 19:00</string>
+    <string name="approval">Approval</string>
+    <string name="crewmail">CrewMail</string>
+    <string name="schedule">Schedule</string>
+    <string name="d_day">D-day</string>
+    <string name="community">Community</string>
+    <string name="notice">Notice</string>
+    <string name="contact">Contact</string>
+    <string name="crewchat">CrewChat</string>
+    <string name="time_card">TimeCard</string>
+    <string name="login_password_change">Password Change</string>
+    <string name="email">Email</string>
+    <string name="cell_phone">Cell Phone</string>
+    <string name="company_phone">Company Phone</string>
+    <string name="emloy_date">Date of Employment</string>
+    <string name="date_of_birth">Birthday</string>
+    <string name="about_crewworks">About CrewWorks</string>
+    <string name="log_out">Log Out</string>
+    <string name="my_profile">My Profile</string>
+    <string name="setings">Settings</string>
+</resources>

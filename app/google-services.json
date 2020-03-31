@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "268267203529",
+    "firebase_url": "https://woori-174807.firebaseio.com",
+    "project_id": "woori-174807",
+    "storage_bucket": "woori-174807.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:268267203529:android:acbbd5b1f820b094",
+        "android_client_info": {
+          "package_name": "com.crewcloud.apps.crewmain"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "268267203529-gta0dfttde4ivomj8aindv210klaj8h9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.crewcloud.apps.crewmain",
+            "certificate_hash": "769f19bfd00680953ab307ebcca0cc0d0f372cfc"
+          }
+        },
+        {
+          "client_id": "268267203529-e8g12k62p4n13i5cljo5m2061a0j4jnq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDi1DbmPqq2KJOl3oKz7T4905Z_dG6Oa08"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "268267203529-e8g12k62p4n13i5cljo5m2061a0j4jnq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

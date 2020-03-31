@@ -1,0 +1,82 @@
+<resources>
+    <string name="app_name">CrewWorks</string>
+
+    <!-- Common -->
+    <string name="common_alert_dialog_install">설치</string>
+    <string name="common_alert_dialog_no">아니요</string>
+
+    <!-- IntroActivity -->
+    <string name="introActivity_message_permission_denied">권한 사용에 동의하시지 않으면 앱을 사용하실 수 없습니다.</string>
+    <string name="string_update_content">Tồn tại phiên bản mới. Bạn có muốn cập nhật phiên bản mới?</string>
+
+    <!-- LoginActivity -->
+
+    <string name="loginActivity_message_wrong_server_site">서버에 접속할 수 없습니다.</string>
+
+
+    <!-- MainActivity -->
+    <string name="navigation_drawer_open">navigation_drawer_open</string>
+    <string name="navigation_drawer_close">navigation_drawer_close</string>
+    <string name="start_sep_title_mobileService">DDịch vụ mobile</string>
+    <string name="start_sep_title_approval">Phê Duyệt</string>
+    <string name="start_sep_title_email">Thư chưa đọc</string>
+    <string name="start_sep_title_schedule">Lịch  hôm nay</string>
+    <string name="start_sep_title_notice">Thông báo</string>
+    <string name="mainActivity_message_exit">\'뒤로\' 버튼을 한번 더 누르시면 종료됩니다.</string>
+    <string name="mailActivity_message_download_apk">File đang được tải xuống\nvui lòng chờ chút.</string>
+    <string name="mailActivity_message_install_apk">%s 앱이 설치되어 있지 않습니다.\n지금 설치하시겠습니까?</string>
+
+
+    <!-- MainActivity -->
+    <string name="loading_content">Please wait.</string>
+    <string name="string_ok">OK</string>
+    <string name="app_name_crewchat">Trò chuyện</string>
+
+    <!-- Login activity -->
+    <string name="sign_up_suggest">Bạn chưa có ID tổ chức(công ty)?</string>
+    <string name="string_sign_up">Tạo tổ chức(công ty) mới</string>
+    <string name="login_password">Số bí mật</string>
+    <string name="login_username">ID người dùng</string>
+    <string name="string_server_site">ID Tổ chức(Công ty)</string>
+    <string name="login_login">Đăng nhập</string>
+    <!-- Sign Up screen -->
+    <!-- Unread Mail screen -->
+
+    <!-- AUTO LOGIN -->
+    <string name="login_button_yes">Yes</string>
+    <string name="login_button_no">No</string>
+    <string name="connection_falsed">Can not connect the above address </string>
+    <string name="login_empty_input">cannot be empty</string>
+    <string name="are_you_sure_loguot">Bạn có muốn thoát khỏi phần mềm?</string>
+    <string name="auto_login_button_yes">Đồng ý</string>
+    <string name="auto_login_button_no">Hủy</string>
+    <string name="about">Thông tin </string>
+    <string name="user_version">Phiên bản người dùng</string>
+    <string name="lastest_version">Phiên bản mới nhất</string>
+    <string name="confirm">Xác Nhận</string>
+    <string name="no_network_error">Không thể kết nối với server</string>
+    <string name="file_not_found_error">Không tìm thấy file trên sever</string>
+    <string name="can_not_check_version">Không thể kiểm tra phiên bản trên sever</string>
+    <string name="setting_notification_from_time">AM 08:00</string>
+    <string name="setting_notification_to_time">PM 19:00</string>
+    <string name="approval">Phê Duyệt</string>
+    <string name="crewmail">CrewMail</string>
+    <string name="schedule">Lịch</string>
+    <string name="d_day">CrewD-day</string>
+    <string name="community">Diễn Đàn</string>
+    <string name="notice">Thông Báo</string>
+    <string name="contact">Danh bạ</string>
+    <string name="crewchat">CrewChat</string>
+    <string name="time_card">Chấm Công</string>
+    <string name="login_password_change">Đổi mật khẩu</string>
+    <string name="email">Hộp thư</string>
+    <string name="cell_phone">Số di động</string>
+    <string name="company_phone">Số điện thoại công ty</string>
+    <string name="emloy_date">Ngày vào công ty</string>
+    <string name="date_of_birth">Ngày sinh</string>
+    <string name="about_crewworks">Thông tin CrewWorks</string>
+    <string name="log_out">Đăng xuất</string>
+    <string name="my_profile">Thông tin của tôi</string>
+    <string name="setings">Settings</string>
+
+</resources>

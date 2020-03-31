@@ -1,0 +1,83 @@
+<resources>
+    <string name="app_name">크루웍스</string> <!-- 크루웍스 -->
+
+    <!-- Common -->
+    <string name="common_alert_dialog_install">설치</string>
+    <string name="common_alert_dialog_no">아니요</string>
+
+    <!-- IntroActivity -->
+    <string name="introActivity_message_permission_denied">권한 사용에 동의하시지 않으면 앱을 사용하실 수 없습니다.</string>
+    <string name="string_update_content">새로운 버전이 존재합니다. 설치하시겠습니까? </string>
+
+    <!-- LoginActivity -->
+
+    <string name="loginActivity_message_wrong_server_site">서버에 접속할 수 없습니다.</string>
+
+
+    <!-- MainActivity -->
+    <string name="navigation_drawer_open">navigation_drawer_open</string>
+    <string name="navigation_drawer_close">navigation_drawer_close</string>
+    <string name="start_sep_title_mobileService">모바일 서비스</string>
+    <string name="start_sep_title_approval">전자결재</string>
+    <string name="start_sep_title_email">읽지 않은 메일</string>
+    <string name="start_sep_title_schedule">오늘의 일정</string>
+    <string name="start_sep_title_notice">공지사항</string>
+    <string name="mainActivity_message_exit">\'뒤로\' 버튼을 한번 더 누르시면 종료됩니다.</string>
+    <string name="mailActivity_message_download_apk">설치 파일을 다운로드 중입니다.\n잠시만 기다려주세요.</string>
+    <string name="mailActivity_message_install_apk">%s 앱이 설치되어 있지 않습니다.\n지금 설치하시겠습니까?</string>
+
+
+    <!-- MainActivity -->
+    <string name="loading_content">Please wait.</string>
+    <string name="string_ok">OK</string>
+    <string name="app_name_crewchat">크루챗</string>
+
+    <!-- Login activity -->
+    <string name="sign_up_suggest">단체(회사) 아이디가 아직 없으신가요?</string>
+    <string name="string_sign_up">새로운 단체(회사) 생성</string>
+    <string name="login_password">비밀번호</string>
+    <string name="login_username">개인 아이디</string>
+    <string name="string_server_site">단체(회사) 아이디</string>
+    <string name="login_login">로그인</string>
+    <!-- Sign Up screen -->
+    <!-- Unread Mail screen -->
+
+    <!-- AUTO LOGIN -->
+    <string name="login_button_yes">확인</string>
+    <string name="login_button_no">취소</string>
+    <string name="connection_falsed">Can not connect the above address </string>
+    <string name="login_empty_input">cannot be empty</string>
+    <string name="are_you_sure_loguot">로그아웃 하시겠습니까?</string>
+    <string name="auto_login_button_yes">예</string>
+    <string name="auto_login_button_no">아니오</string>
+
+    <string name="about">정보</string>
+    <string name="user_version">사용자 버젼</string>
+    <string name="lastest_version">최신버젼</string>
+    <string name="confirm">확인</string>
+    <string name="no_network_error">서버에 접속 못 했습니다.</string>
+    <string name="file_not_found_error">File Not Found</string>
+    <string name="can_not_check_version">Can not check the version on sever</string>
+    <string name="setting_notification_from_time">AM 08:00</string>
+    <string name="setting_notification_to_time">PM 19:00</string>
+    <string name="approval">전자결재</string>
+    <string name="crewmail">크루메일</string>
+    <string name="schedule">일정관리</string>
+    <string name="d_day">디데이</string>
+    <string name="community">커뮤니티</string>
+    <string name="notice">공지사항</string>
+    <string name="contact">주소록</string>
+    <string name="crewchat">크루챗</string>
+    <string name="time_card">출근부</string>
+    <string name="login_password_change">비밀번호 변경</string>
+    <string name="email">이메일</string>
+    <string name="cell_phone">휴대폰</string>
+    <string name="company_phone">회사연락처</string>
+    <string name="emloy_date">입사일</string>
+    <string name="date_of_birth">생일</string>
+    <string name="about_crewworks">크루웍스 정보</string>
+    <string name="log_out">로그아웃</string>
+    <string name="my_profile">내정보</string>
+    <string name="setings">설정</string>
+
+</resources>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_inflate_layout_unread_mail_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:background="@drawable/layer_list_rl_inflate_layout_unread_mail_item">
+
+    <TextView
+        android:id="@+id/tv_inflate_layout_unread_mail_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/tv_inflate_layout_unread_mail_item_date"
+        android:layout_toStartOf="@+id/tv_inflate_layout_unread_mail_item_date"
+        android:layout_marginRight="5dp"
+        android:layout_marginEnd="5dp"
+        android:textSize="15sp"
+        android:textColor="#555555"
+        android:singleLine="true" />
+
+    <TextView
+        android:id="@+id/tv_inflate_layout_unread_mail_item_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textSize="15sp"
+        android:textColor="#267BCC"
+        android:singleLine="true" />
+
+</RelativeLayout>

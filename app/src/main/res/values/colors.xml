@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="myColor_PrimaryDark">#1b6bb9</color>
+    <color name="myColor_Primary">#4391bf</color>
+    <color name="white">#FFFFFF</color>
+
+
+    <color name="colorPrimary">#4391dd</color>
+    <color name="colorPrimaryDark">#1b6bb9</color>
+    <color name="colorAccent">#267BCC</color>
+    <color name="app_base_color">#4391dd</color>
+    <color name="login_button_login_background">#3f95e9</color>
+    <color name="login_button_signup_background">#277bcd</color>
+    <color name="drawer_devide_color">#909796</color>
+    <color name="gray_light">#DFDFDF</color>
+    <color name="gray">#e8e8e8</color>
+    <color name="gray_compose_mail">#888888</color>
+    <color name="black">#000000</color>
+    <color name="text_color_sync">#5d5d5d</color>
+    <color name="transparent">#00000000</color>
+    <color name="time_color_current_chat">#777777</color>
+    <color name="share_border_color">#c4c4c4</color>
+    <color name="button_login">#3f95e9</color>
+</resources>

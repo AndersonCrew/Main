@@ -1,0 +1,86 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="LoginButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:background">@drawable/background_login_button_radius_thin</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+
+    <style name="SignupButton">
+        <item name="android:textStyle">normal</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">10dp</item>
+        <!--
+        <item name="android:background">@drawable/button_signup_background</item>
+        -->
+        <item name="android:background">@drawable/background_signup_button_radius_thin</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">17sp</item>
+
+    </style>
+
+    <style name="ProgressCircleDialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowTitleStyle">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="Toolbar" parent="AppTheme">
+        <item name="popupTheme">@style/toolbar_popup_style</item>
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="colorAccent">@color/app_base_color</item>
+    </style>
+    <style name="toolbar_popup_style" parent="Theme.AppCompat.Light">
+        <item name="android:textColorSecondary">@android:color/darker_gray</item>
+        <item name="colorAccent">@color/app_base_color</item>
+    </style>
+
+    <style name="paddingStatusBar">
+        <item name="android:paddingTop">25dp</item>
+    </style>
+    <style name="button">
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+    </style>
+
+    <style name="Button">
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+    </style>
+
+    <!-- SETTING -->
+    <style name="SettingRow">
+        <item name="android:textStyle">normal</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">@dimen/dimen_16_32</item>
+    </style>
+
+
+</resources>

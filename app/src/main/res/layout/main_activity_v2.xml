@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/start_drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:openDrawer="start">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/start_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF"
+            android:fadeScrollbars="true"
+            android:scrollbars="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#F3F3F3"
+                    android:paddingBottom="10dp"
+                    android:paddingEnd="0dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="0dp"
+                    android:paddingStart="15dp"
+                    android:paddingTop="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/start_sep_title_mobileService"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp" />
+
+                </RelativeLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/fl_enabled_applications"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF"
+                    android:orientation="horizontal"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="5dp" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#F3F3F3"
+                    android:paddingBottom="10dp"
+                    android:paddingEnd="0dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="0dp"
+                    android:paddingStart="15dp"
+                    android:paddingTop="5dp"
+                    android:text="@string/start_sep_title_approval"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_approval"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#F3F3F3"
+                    android:paddingBottom="10dp"
+                    android:paddingEnd="0dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="0dp"
+                    android:paddingStart="15dp"
+                    android:paddingTop="10dp"
+                    android:text="@string/start_sep_title_email"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_unread_mail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#F3F3F3"
+                    android:paddingBottom="10dp"
+                    android:paddingEnd="0dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="0dp"
+                    android:paddingStart="15dp"
+                    android:paddingTop="10dp"
+                    android:text="@string/start_sep_title_schedule"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_schedule"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#F3F3F3"
+                    android:paddingBottom="10dp"
+                    android:paddingEnd="0dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="0dp"
+                    android:paddingStart="15dp"
+                    android:paddingTop="10dp"
+                    android:text="@string/notice"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_notice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="280dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        android:visibility="visible"
+        app:headerLayout="@layout/nav_header_main"
+        />
+    <!--app:menu="@menu/menu_start_drawer"-->
+
+</android.support.v4.widget.DrawerLayout>

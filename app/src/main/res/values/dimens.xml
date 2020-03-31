@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="avatar_user_dimen_custom">48dp</dimen>
+    <dimen name="margin_normal">9dp</dimen>
+    <!-- LEFT MENU -->
+    <dimen name="left_menu_width">280dp</dimen>
+    <dimen name="avatar_dimen">85dp</dimen>
+    <dimen name="activity_login_logo_margin">20dp</dimen>
+    <dimen name="activity_login_logo_left_bar_margin">45dp</dimen>
+    <dimen name="setting_tv_size">17sp</dimen>
+    <dimen name="setting_page_icon_under">40dp</dimen>
+    <dimen name="dimen_16_32">16dp</dimen>
+    <dimen name="text_16_32">16sp</dimen>
+    <dimen name="dimen_12_24">12dp</dimen>
+    <dimen name="dimen_10_20">10dp</dimen>
+    <dimen name="dimen_14">14sp</dimen>
+    <dimen name="dimen_13">13sp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+</resources>

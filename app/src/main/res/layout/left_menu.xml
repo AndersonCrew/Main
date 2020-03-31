@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawerPane"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="start"
+    android:background="@android:color/white"
+    android:fitsSystemWindows="true">
+
+    <!-- HEADER -->
+    <LinearLayout
+        style="@style/paddingStatusBar"
+        android:id="@+id/profile_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/app_base_color"
+        android:orientation="horizontal">
+
+        <!-- AVATAR -->
+        <ImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="@dimen/avatar_user_dimen_custom"
+            android:layout_height="@dimen/avatar_user_dimen_custom"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="@dimen/margin_normal"
+            android:scaleType="centerCrop"
+            android:src="@drawable/login_username" />
+
+        <!-- USERNAME & EMAIL -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:singleLine="true"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_setting"
+            style="@style/button"
+            android:layout_width="?actionBarSize"
+            android:layout_height="?actionBarSize"
+            android:layout_gravity="center_vertical"
+            android:scaleType="center"
+            android:src="@drawable/menuleft_ic_setting_white" />
+
+    </LinearLayout>
+
+
+    <!-- Profile Box -->
+
+    <LinearLayout
+        android:id="@+id/profileBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profile_bar"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/avatar"
+            android:layout_width="@dimen/avatar_dimen"
+            android:layout_height="@dimen/avatar_dimen"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/activity_login_logo_margin"
+            android:scaleType="fitXY" />
+
+        <TextView
+            android:id="@+id/userName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/companyName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/activity_login_logo_margin"
+            android:background="@color/drawer_devide_color" />
+    </LinearLayout>
+
+
+    <!-- List of Actions (pages) -->
+    <ListView
+        android:id="@+id/navList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/profileBox"
+        android:choiceMode="singleChoice"
+        android:divider="@color/drawer_devide_color"
+        android:dividerHeight="0dp"
+        android:scrollbars="none" />
+
+</RelativeLayout>

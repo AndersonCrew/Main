@@ -115,8 +115,6 @@ public class ApplicationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 case "Schedule": {
                     iv_inflate_layout_app_item_icon.setImageResource(R.drawable.ic_launcher_schedule);
                     tv_inflate_layout_app_item_name.setText(R.string.schedule);
-
-
                     break;
                 }
 
@@ -139,14 +137,12 @@ public class ApplicationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 case "Board": {
                     iv_inflate_layout_app_item_icon.setImageResource(R.drawable.ic_launcher_community);
                     tv_inflate_layout_app_item_name.setText(R.string.community);
-
                     break;
                 }
 
                 case "Notice": {
                     iv_inflate_layout_app_item_icon.setImageResource(R.drawable.ic_launcher_notice);
                     tv_inflate_layout_app_item_name.setText(R.string.notice);
-
                     break;
                 }
 
@@ -164,9 +160,6 @@ public class ApplicationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         tvBadge.setVisibility(View.VISIBLE);
                         tvBadge.setText(application.totalUnreadCount);
                     }
-//                    tvBadge.setVisibility(View.VISIBLE);
-//                    tvBadge.setText("2");
-
                     break;
                 }
 
@@ -177,7 +170,6 @@ public class ApplicationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 }
 
                 default: {
-//                    iv_inflate_layout_app_item_icon.setImageResource(R.drawable.ic_apps_other);
                     break;
                 }
             }

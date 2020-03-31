@@ -51,16 +51,10 @@ public class GcmIntentService extends IntentService {
         String messageType = gcm.getMessageType(intent);
 
         if (!extras.isEmpty()) {
-            //Log.d(Statics.LOG_TAG, extras.toString());
-            //Util.printLogs(extras.toString());
-
             if (GoogleCloudMessaging.
                     MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
-//                sendNotification("Send error",extras.toString());
             } else if (GoogleCloudMessaging.
                     MESSAGE_TYPE_DELETED.equals(messageType)) {
-//                sendNotification("Deleted messages on server ",
-//                        extras.toString());
             } else if (GoogleCloudMessaging.
                     MESSAGE_TYPE_MESSAGE.equals(messageType)) {
                 if (extras.containsKey("Code")) {
@@ -84,7 +78,6 @@ public class GcmIntentService extends IntentService {
         try {
             Log.d("TAG", extras.toString());
             NotificationBundleDto bundleDto = new Gson().fromJson(extras.getString("Data"), NotificationBundleDto.class);
-            //Code = Integer.parseInt(extras.getString("Code"));
             String title = extras.getString("Title");
             String fromName = extras.getString("FromName");
             String content = extras.getString("Content");
@@ -93,17 +86,7 @@ public class GcmIntentService extends IntentService {
             String mailNo = extras.getString("MailNo");
             String mailBoxNo = extras.getString("MailBoxNo");
 
-            System.out.println("aaaaaaaaa title " + title);
-            System.out.println("aaaaaaaaa fromName " + fromName);
-            System.out.println("aaaaaaaaa content " + content);
-            System.out.println("aaaaaaaaa receivedDate " + receivedDate);
-            System.out.println("aaaaaaaaa toAddress " + toAddress);
-            System.out.println("aaaaaaaaa mailNo " + mailNo);
-            System.out.println("aaaaaaaaa mailBoxNo " + mailBoxNo);
             final long unreadCount = bundleDto.getUnreadTotalCount();
-            // Update unreadTotalCount to database in new thread, hihi
-
-            Log.d("TAG", "unreadCount:" + unreadCount);
 
             ShortcutBadger.applyCount(this, (int) unreadCount); //for 1.1.4
 
@@ -165,22 +148,16 @@ public class GcmIntentService extends IntentService {
         }
 
         bigTextStyle.bigText(Html.fromHtml(bigText));
-        // summary is displayed replacing the position of contentText
-        // if summary is not set, contentInfo will not be displayed too
         bigTextStyle.setSummaryText(toAddress);
-        // Moves the big view style object into the notification object.
         mBuilder.setStyle(bigTextStyle);
 
 
         NotificationManager mNotificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        //mNotificationManager.cancelAll();
-        // mId allows you to update the notification later on.
         int notificationID = 999;
         Notification notification = mBuilder.build();
 
         //consider using setTicker of Notification.Builder
-//        notification.tickerText = "New Message";
         if (isNewMail) {
             if (isTime) {
                 if (TimeUtils.isBetweenTime(strFromTime, strToTime)) {
@@ -192,94 +169,5 @@ public class GcmIntentService extends IntentService {
                 mNotificationManager.notify(notificationID, mBuilder.build());
             }
         }
-    }
-
-
-    private void executeGCM(GCMData dto, Intent intent) {
-        /*switch (BuildConfig.App_name)
-        {
-            case 0:
-                if(dto.type ==1||dto.type==2)
-                {
-                    HttpRequest.getInstance().checLogin(null);
-                }
-                break;
-            case 1:
-                CrewGCMDatabaseHelper.updateGCMItem(dto);
-                if(Global.isAppForeground)
-                {
-                    sendBroadcastToActivity(dto);
-                }
-                else
-                {
-                    new CrewPrefs().putBooleanValue(CrewStatics.RELOAD_MAIN_KEY,true);
-                }
-                break;
-            case 2:
-                if(dto.type ==1||dto.type==2)
-                {
-                    HttpRequest.getInstance().checLogin(null);
-                }
-                else {
-                    Util.setBadge(DaZoneApplication.getInstance(), dto.count);
-                }
-                break;
-            default:
-                break;
-        }
-
-        if(dto.type!=500&&BuildConfig.App_name!=0) {
-            sendNotification(dto);
-        }
-            GcmBroadcastReceiver.completeWakefulIntent(intent);*/
-    }
-
-    private void sendNotification(GCMData dto) {
-        /*int icon_id;
-
-        PendingIntent contentIntent;
-        switch (BuildConfig.App_name)
-        {
-            case 0:
-                icon_id = R.drawable.notifi_ic_timecard;
-                contentIntent = PendingIntent.getActivity(this, 0,
-                    new Intent(this, LoginActivity.class), 0);
-                break;
-            case 1:
-                icon_id = R.drawable.notifi_ic_crewcloud;
-                contentIntent = PendingIntent.getActivity(this, 0,
-                        new Intent(this, LoginActivity.class), 0);
-                break;
-            default:
-
-                Intent intent = new Intent(this, CrewNoteActivity.class);
-                intent.putExtra(Statics.KEY_NOTE_NO, dto.NoteNo);
-                intent.putExtra(Statics.KEY_NOTE_TITLE, dto.title);
-                icon_id = R.drawable.notifi_ic_crewnote;
-                contentIntent = PendingIntent.getActivity(this, 0,
-                        intent, PendingIntent.FLAG_UPDATE_CURRENT);
-                break;
-        }
-        NotificationManager mNotificationManager = (NotificationManager)
-                this.getSystemService(Context.NOTIFICATION_SERVICE);
-
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(this)
-        .setSmallIcon(icon_id)
-        .setContentTitle(dto.title)
-        .setStyle(new NotificationCompat.BigTextStyle()
-        .bigText(dto.content))
-        .setContentText(dto.content);
-        mBuilder.setAutoCancel(true);
-
-        mBuilder.setContentIntent(contentIntent);
-        mNotificationManager.notify(0, mBuilder.build());*/
-    }
-
-    // called to send data to Activity
-    private void sendBroadcastToActivity(GCMData dto) {
-        Intent intent = new Intent(Statics.ACTION_RECEIVER_NOTIFICATION);
-        intent.putExtra(Statics.GCM_DATA_NOTIFICATOON, new Gson().toJson(dto));
-        sendBroadcast(intent);
     }
 }

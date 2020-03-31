@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -22,27 +24,49 @@ import butterknife.OnClick;
 
 public class ChangePasswordActivity extends AppCompatActivity implements ChangePassPresenter.view {
 
-    @Bind(R.id.fragment_change_pass_et_confirm_pass)
-    EditText etConfirmPass;
-
-    @Bind(R.id.fragment_change_pass_et_new_pass)
-    EditText etNewPass;
-
-    @Bind(R.id.fragment_change_pass_et_old_pass)
-    EditText etOldPass;
-
-    ChangePassPresenterImp changePassPresenterImp;
+    private EditText etConfirmPass, etNewPass, etOldPass;
+    private ChangePassPresenterImp changePassPresenterImp;
+    private Button btnChangePass;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
-        ButterKnife.bind(this);
+
+        initViews();
+        initControls();
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.myColor_PrimaryDark));
         }
         changePassPresenterImp = new ChangePassPresenterImp(this);
         changePassPresenterImp.attachView(this);
+    }
+
+    private void initViews() {
+        etConfirmPass = (EditText) findViewById(R.id.etConfirmPassword);
+        etNewPass = (EditText) findViewById(R.id.etNewPassword);
+        etOldPass = (EditText) findViewById(R.id.fragment_change_pass_et_old_pass);
+        btnChangePass = (Button) findViewById(R.id.btnChangePass);
+    }
+
+    private void initControls() {
+        btnChangePass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String oldPass = etOldPass.getText().toString();
+                String newPass = etNewPass.getText().toString();
+                String confirmPass = etConfirmPass.getText().toString();
+
+                changePassPresenterImp.CheckPass(oldPass, newPass, confirmPass);
+            }
+        });
+
+        findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -52,19 +76,6 @@ public class ChangePasswordActivity extends AppCompatActivity implements ChangeP
         changePassPresenterImp.detachView();
     }
 
-    @OnClick(R.id.btn_back)
-    public void onClickback() {
-        finish();
-    }
-
-    @OnClick(R.id.fragment_change_pass_btn_change_pass)
-    public void onClickChangePass() {
-        String oldPass = etOldPass.getText().toString();
-        String newPass = etNewPass.getText().toString();
-        String confirmPass = etConfirmPass.getText().toString();
-
-        changePassPresenterImp.CheckPass(oldPass, newPass, confirmPass);
-    }
 
     @Override
     public void ChangePassSuccess() {

@@ -77,17 +77,9 @@ public class WebViewActivity extends BaseActivity {
         Bundle bundle = getIntent().getExtras();
         String url = bundle.getString("AAA");
         if (url != null) {
-//            if (url.equals(Statics.URL_ALL_BOARD)) {
-//                webView.setVisibility(View.GONE);
-//                ivImage.setVisibility(View.VISIBLE);
-//                Picasso.with(this).load(R.mipmap.allboad).into(ivImage);
-//                progress_bar.setVisibility(View.GONE);
-//            } else {
                 webView.setVisibility(View.VISIBLE);
                 ivImage.setVisibility(View.GONE);
-//
                 loadWeb(url);
-//            }
         }
 
 

@@ -17,21 +17,11 @@ import org.json.JSONObject;
 public class WebServiceManager<T> {
 
     public void doJsonObjectRequest(int requestMethod, final String url, final JSONObject bodyParam, final RequestListener<String> listener) {
-        if (Statics.WRITEHTTPREQUEST) {
-//            Util.printLogs("url : " + url);
-//            Util.printLogs("bodyParam : " + bodyParam.toString());
-        }
-
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(requestMethod, url, bodyParam, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-
-                if (Statics.WRITEHTTPREQUEST) {
-//                    Util.printLogs("response.toString() : " + response.toString());
-                }
                 try {
                     JSONObject json = new JSONObject(response.getString("d"));
-
                     if (url.contains(Statics.URL_HAS_APPLICATION)) {
                         listener.onSuccess(json.toString());
                     } else {
@@ -47,12 +37,9 @@ public class WebServiceManager<T> {
                             } else {
                                 if (errorDto.code == 0 && !url.contains(Statics.URL_CHECK_SESSION)
                                         && !url.contains(Statics.URL_REG_GCM_ID) && !url.contains(Statics.URL_GET_USER_INFO)) {
-                                    // Custom store session error
                                     CrewCloudApplication.getInstance().getPreferenceUtilities().setSessionError(true);
                                     CrewCloudApplication.getInstance().getPreferenceUtilities().clearLogin();
                                     BaseActivity.Instance.startSingleActivity(LoginActivity.class);
-                                } else {
-//                                    Util.printLogs("Form is invalid");
                                 }
                             }
 

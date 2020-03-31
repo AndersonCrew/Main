@@ -29,12 +29,6 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.mActivity = mActivity;
     }
 
-    public void addAll(List<LeftMenu> comments) {
-        int curr = getItemCount();
-        lstApp.addAll(comments);
-        notifyItemRangeInserted(curr, getItemCount());
-    }
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.menu_adapter, parent, false);
@@ -54,11 +48,6 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return 0;
         }
         return lstApp.size();
-    }
-
-    public void clear() {
-        lstApp.clear();
-        notifyDataSetChanged();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -89,8 +78,4 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     private ItemLeftMenuListener leftMenuListener;
-
-    public void setLeftMenuListener(ItemLeftMenuListener leftMenuListener) {
-        this.leftMenuListener = leftMenuListener;
-    }
 }

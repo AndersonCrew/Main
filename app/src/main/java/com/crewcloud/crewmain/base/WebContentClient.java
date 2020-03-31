@@ -52,7 +52,6 @@ public class WebContentClient extends WebViewClient {
             return true;
 
         } else if (url.startsWith("logout:")) {
-//            ParentActivity.logout();
         }else {
             view.loadUrl(url);
         }
@@ -62,13 +61,11 @@ public class WebContentClient extends WebViewClient {
 
     @Override
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
-        //ParentActivity.MainActivityHandler.sendEmptyMessage(MainActivity.ACTION_SHOW_PROGRESSBAR);
         mProgressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onPageFinished(WebView view, String url) {
-        //ParentActivity.MainActivityHandler.sendEmptyMessage(MainActivity.ACTION_HIDE_PROGRESSBAR);
         mProgressBar.setVisibility(View.GONE);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {

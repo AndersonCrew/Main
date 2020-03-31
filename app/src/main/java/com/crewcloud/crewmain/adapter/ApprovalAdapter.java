@@ -56,11 +56,6 @@ public class ApprovalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return lstApp.size();
     }
 
-    public void clear() {
-        lstApp.clear();
-        notifyDataSetChanged();
-    }
-
     class ViewHolder extends RecyclerView.ViewHolder {
 
         @Bind(R.id.tv_inflate_layout_approval_document_item_type)

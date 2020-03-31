@@ -25,11 +25,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     public ActionBar mActionBar;
     protected Context mContext;
     public static BaseActivity Instance;
-
-    //public Prefs mPrefs;
     private Dialog mProgressDialog;
     protected String server_site;
-    private boolean isVisible = false;
     private boolean mIsExit;
 
     @Override
@@ -37,18 +34,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mContext = this;
         Instance = this;
-        //mPrefs = CrewBoardApplication.getInstance().getmPrefs();
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         enableHomeAction();
-       /* options = new DisplayImageOptions.Builder()
-                .showImageOnFail(R.drawable.avatar).cacheInMemory(true)
-                .cacheOnDisc(true).bitmapConfig(Bitmap.Config.RGB_565)
-                .build();*/
-
-
-        //server_site = mPrefs.getServerSite();
         server_site = "http://google.com";
     }
     @Override
@@ -59,10 +48,8 @@ public abstract class BaseActivity extends AppCompatActivity {
             if (mIsExit) {
                 super.onBackPressed();
             } else {
-                // press 2 times to exit app feature
                 this.mIsExit = true;
-                String Str = "";
-//                Log.e("LL", Locale.getDefault().getLanguage());
+                String Str;
                 if (Locale.getDefault().getLanguage().equals("vi")) {
                     Str = "Click thêm lần nữa ứng dụng sẽ được đóng";
                 } else if (Locale.getDefault().getLanguage().equals("ko")) {

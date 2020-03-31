@@ -67,11 +67,6 @@ public class UnreadMailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         return lstApp.size();
     }
 
-    public void clear() {
-        lstApp.clear();
-        notifyDataSetChanged();
-    }
-
     class ViewHolder extends RecyclerView.ViewHolder {
 
         @Bind(R.id.tv_inflate_layout_unread_mail_item_name)

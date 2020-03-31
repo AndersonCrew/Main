@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -43,8 +42,6 @@ import com.crewcloud.crewmain.adapter.ScheduleAdapter;
 import com.crewcloud.crewmain.adapter.UnreadMailAdapter;
 import com.crewcloud.crewmain.datamodel.Application;
 import com.crewcloud.crewmain.datamodel.ApprovalDocument;
-import com.crewcloud.crewmain.datamodel.ErrorDto;
-import com.crewcloud.crewmain.datamodel.LeftMenu;
 import com.crewcloud.crewmain.datamodel.Login_v2_Result;
 import com.crewcloud.crewmain.datamodel.Mail;
 import com.crewcloud.crewmain.datamodel.NoticeDocument;
@@ -54,7 +51,6 @@ import com.crewcloud.crewmain.module.device.DevicePresenterImp;
 import com.crewcloud.crewmain.util.DeviceUtilities;
 import com.crewcloud.crewmain.util.PreferenceUtilities;
 import com.crewcloud.crewmain.util.Statics;
-import com.crewcloud.crewmain.util.Util;
 import com.crewcloud.crewmain.util.WebClient;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.android.gms.common.ConnectionResult;
@@ -69,12 +65,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -89,7 +83,6 @@ import butterknife.ButterKnife;
 import me.leolin.shortcutbadger.ShortcutBadger;
 
 import static com.crewcloud.crewmain.util.Util.compareVersionNames;
-import static com.crewcloud.crewmain.util.Util.getApplicationName;
 
 /**
  * Created by Dazone on 8/22/2017.
@@ -126,7 +119,6 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private final ActivityHandler mActivityHandler = new ActivityHandler(this);
     public static String urlDownload = "";
-    private List<LeftMenu> lstMenu = new ArrayList<>();
 
 
     @Override
@@ -170,17 +162,8 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
         }
 
         Login_v2_Result loginResult = new Gson().fromJson(preferenceUtilities.getUserData(), Login_v2_Result.class);
-        TextView tv_name = (TextView) header.findViewById(R.id.tv_name);
-        ImageView ivSetting = (ImageView) header.findViewById(R.id.iv_setting);
-        RecyclerView rvMenu = (RecyclerView) header.findViewById(R.id.menu);
-
-//        lstMenu.add(new LeftMenu("전사공지"));
-//        lstMenu.add(new LeftMenu("본사공지"));
-//        lstMenu.add(new LeftMenu("그룹공지"));
-//
-//        rvMenu.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-//        rvMenu.setAdapter(menuadapter);
-//        menuadapter.addAll(lstMenu);
+        TextView tv_name = header.findViewById(R.id.tv_name);
+        ImageView ivSetting = header.findViewById(R.id.iv_setting);
 
         ivSetting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -196,8 +179,8 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
             tv_name.setText(loginResult.FullName);
         }
 
-        TextView tv_email = (TextView) header.findViewById(R.id.tv_email);
-        ImageView iv_avatar = (ImageView) header.findViewById(R.id.iv_avatar);
+        TextView tv_email = header.findViewById(R.id.tv_email);
+        ImageView iv_avatar = header.findViewById(R.id.iv_avatar);
 
         if (!TextUtils.isEmpty(loginResult.avatar)) {
             PreferenceUtilities prefUtils = CrewCloudApplication.getInstance().getPreferenceUtilities();
@@ -231,7 +214,6 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
                 } else {
                     runOnUiThread(new Runnable() {
                         public void run() {
-                            // runs on UI thread
                             Toast.makeText(getApplicationContext(), R.string.can_not_check_version, Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -255,15 +237,6 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
         @Override
         public void run() {
             try {
-               /* URL txtUrl = new URL("http://www.crewcloud.net/Android/Version/CrewMain.txt");
-                HttpURLConnection urlConnection = (HttpURLConnection) txtUrl.openConnection();
-
-                InputStream inputStream = urlConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-
-                String serverVersion = bufferedReader.readLine();
-                inputStream.close();
-*/
                 String appVersion = BuildConfig.VERSION_NAME;
                 if (compareVersionNames(appVersion, version) == -1) {
                     mActivityHandler.sendEmptyMessage(Constants.ACTIVITY_HANDLER_START_UPDATE);
@@ -287,7 +260,6 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
 
             if (activity != null) {
                 if (msg.what == Constants.ACTIVITY_HANDLER_NEXT_ACTIVITY) {
-                    /* startApplication();*/
                 } else if (msg.what == Constants.ACTIVITY_HANDLER_START_UPDATE) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(activity);
                     builder.setMessage(R.string.string_update_content);
@@ -296,7 +268,6 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             new Async_DownloadApkFileCheckVersion(MainActivityV2.this, "CrewMain").execute();
-                            //new Async_DownloadApkFileCheckVersion(MainActivityV2.this, getApplicationName(getApplicationContext())).execute();
                             dialog.dismiss();
                         }
                     });
@@ -305,7 +276,6 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
-                            /*  startApplication();*/
                         }
                     });
                     try {
@@ -356,8 +326,6 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
             try {
                 // URL apkUrl = new URL("http://www.crewcloud.net/Android/Package/CrewMain.apk");
                 URL apkUrl = new URL(urlDownload);
-                // URL apkUrl = new URL(Constants.ROOT_URL_ANDROID + Constants.PACKGE + mApkFileName + ".apk");
-//                URL apkUrl = new URL("http://www.crewcloud.net/Android/Package/CrewMain.apk");
                 urlConnection = (HttpURLConnection) apkUrl.openConnection();
                 inputStream = urlConnection.getInputStream();
                 bufferedInputStream = new BufferedInputStream(inputStream);
@@ -422,7 +390,6 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
             MainActivityV2 activity = mWeakActivity.get();
 
             if (activity != null) {
-//                String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/download/" + mApkFileName + ".apk";
                 String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/download/" + mApkFileName + ".apk";
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -480,8 +447,6 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
             try {
 //                URL apkUrl = new URL("http://www.crewcloud.net/Android/Package/CrewMain.apk");
                 URL apkUrl = new URL(urlDownload);
-                // URL apkUrl = new URL(Constants.ROOT_URL_ANDROID + Constants.PACKGE + mApkFileName + ".apk");
-//                URL apkUrl = new URL("http://www.crewcloud.net/Android/Package/CrewMain.apk");
                 urlConnection = (HttpURLConnection) apkUrl.openConnection();
                 inputStream = urlConnection.getInputStream();
                 bufferedInputStream = new BufferedInputStream(inputStream);
@@ -547,7 +512,6 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
             MainActivityV2 activity = mWeakActivity.get();
 
             if (activity != null) {
-//                String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/download/" + mApkFileName + ".apk";
                 String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/download/" + mApkFileName + ".apk";
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -672,13 +636,6 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
                                     int length = data.size();
 
                                     mListOfApplications = new ArrayList<>();
-                                    // = new Application();
-                                    //application.ApplicationNo = 0;
-                                    //application.ProjectCode = "CrewChat";
-                                    //application.ApplicationName = getString(R.string.app_name_crewchat);
-                                    //application.PackageName = "com.dazone.crewchat";
-
-                                    //mListOfApplications.add(application);
 
                                     JsonNode appNode;
 
@@ -733,17 +690,6 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
             } catch (Exception e) {
                 e.printStackTrace();
             }
-//            Application happyCall = new Application();
-//            happyCall.setProjectCode("HappyCall");
-//            happyCall.setPackageName("http://wine.woorihom.com/UI/MobileHappyCall/");
-//            happyCall.setApplicationName("해피콜");
-//            mListOfApplications.add(happyCall);L
-//            Application board = new Application();
-//            board.setProjectCode("OA");
-//            board.setPackageName("http://wine.woorihom.com/UI/mobileallboard");
-//            board.setApplicationName("게시판");
-//            mListOfApplications.add(board);
-
         }
     }
 
@@ -830,24 +776,6 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
                 otherListApp(application, String.valueOf(mListOfApprovalDocuments.get(position).ID));
             }
         });
-//        ll_approval_documents.removeAllViews();
-//
-//        LayoutInflater layoutInflater = getLayoutInflater();
-//        RelativeLayout rl_inflate_layout_approval_document_item;
-//        TextView tv_inflate_layout_approval_document_item_type, tv_inflate_layout_approval_document_item_title, tv_inflate_layout_approval_document_item_date;
-//
-//        for (ApprovalDocument document : mListOfApprovalDocuments) {
-//            rl_inflate_layout_approval_document_item = (RelativeLayout) layoutInflater.inflate(R.layout.inflate_layout_approval_document_item, ll_approval_documents, false);
-//            ll_approval_documents.addView(rl_inflate_layout_approval_document_item);
-//
-//            tv_inflate_layout_approval_document_item_type = (TextView) rl_inflate_layout_approval_document_item.findViewById(R.id.tv_inflate_layout_approval_document_item_type);
-//            tv_inflate_layout_approval_document_item_title = (TextView) rl_inflate_layout_approval_document_item.findViewById(R.id.tv_inflate_layout_approval_document_item_title);
-//            tv_inflate_layout_approval_document_item_date = (TextView) rl_inflate_layout_approval_document_item.findViewById(R.id.tv_inflate_layout_approval_document_item_date);
-//
-//            tv_inflate_layout_approval_document_item_type.setText("[" + document.AccessName + "]");
-//            tv_inflate_layout_approval_document_item_title.setText(document.Title);
-//            tv_inflate_layout_approval_document_item_date.setText(document.RegDate);
-//        }
     }
 
     private void setListOfSchedule() {
@@ -938,20 +866,7 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
                                     }.getType());
 
                                     if (!listSchedule.isEmpty()) {
-//                                    scheduleDocument.ScheduleNo = itemNode.get("ScheduleNo").asLong();
-//                                    scheduleDocument.CalendarNo = itemNode.get("CalendarNo").asLong();
-//                                    scheduleDocument.Title = itemNode.get("Title").asText();
-//                                    scheduleDocument.CalendarType = itemNode.get("CalendarType").asInt();
-//                                    scheduleDocument.DivisionNo = itemNode.get("DivisionNo").asInt();
-//                                    scheduleDocument.CalendarColor = itemNode.get("CalendarColor").asText();
-//                                    scheduleDocument.StartTime = itemNode.get("StartTime").asText();
-//                                    scheduleDocument.EndTime = itemNode.get("EndTime").asText();
-//                                    mListOfScheduleDocuments.add(scheduleDocument);
-//                                        for (int j = 0; j < listSchedule.size(); j++) {
-//                                            ScheduleDocument scheduleDocument = listSchedule.get(i);
-//                                            mListOfScheduleDocuments.add(scheduleDocument);
                                         mListOfScheduleDocuments.addAll(listSchedule);
-//                                        }
                                     }
                                 }
                             } catch (Exception e) {
@@ -1070,7 +985,6 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
                                         appNode = data.get(i);
 
                                         notice = new NoticeDocument();
-//                                        mListOfNotices.add(notice);
                                         notice.NoticeNo = Long.parseLong(appNode.get("NoticeNo").asText());
                                         notice.Title = appNode.get("Title").asText();
                                         notice.DivisionName = appNode.get("DivisionName").asText();
@@ -1104,68 +1018,9 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
 
     // ----------------------------------------------------------------------------------------------
 
-
-/*    private class WebClientAsync_Logout_v2 extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected Void doInBackground(Void... params) {
-            PreferenceUtilities preferenceUtilities = CrewCloudApplication.getInstance().getPreferenceUtilities();
-
-            WebClient.Logout_v2(preferenceUtilities.getCurrentMobileSessionId(),
-                    "http://" + preferenceUtilities.getCurrentCompanyDomain(), new WebClient.OnWebClientListener() {
-                        @Override
-                        public void onSuccess(JsonNode jsonNode) {
-                        }
-
-                        @Override
-                        public void onFailure() {
-                        }
-                    });
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-
-            PreferenceUtilities preferenceUtilities = CrewCloudApplication.getInstance().getPreferenceUtilities();
-            preferenceUtilities.setCurrentMobileSessionId("");
-            preferenceUtilities.setCurrentCompanyNo(0);
-
-            Intent intent = new Intent(MainActivityV2.this, LoginActivity.class);
-            startActivity(intent);
-            finish();
-        }
-    }*/
-
-    // ----------------------------------------------------------------------------------------------
-
-    private boolean isPackageInstalled(String packagename, PackageManager packageManager) {
-        try {
-            packageManager.getPackageInfo(packagename, 0);
-            return true;
-        } catch (PackageManager.NameNotFoundException e) {
-            return false;
-        }
-    }
-
     private void otherApp(final Application application) {
         String packageName = application.PackageName;
-     /*   PackageManager pm = context.getPackageManager();
-        boolean installed = isPackageInstalled("gw.se-won.co.kr");
-        if(installed) {
-            //This intent will help you to launch if the package is already installed
-            Intent LaunchIntent = getPackageManager() .getLaunchIntentForPackage("com.Ch.Example.pack");
-            startActivity(LaunchIntent); } else {
-
-        }*/
-
         Intent intent = getPackageManager().getLaunchIntentForPackage(packageName);
-
-
-      /*  if (mTempDomain.equals(domainSeverLogin_1)) {
-
-        } else {*/
         if (intent == null) {
             if (application.getProjectCode().equals("OA") || application.getProjectCode().equals("HappyCall")) {
                 Intent browserIntent = new Intent(MainActivityV2.this, WebViewActivity.class);
@@ -1179,10 +1034,8 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String apkFileName = "";
-                        //check if domain sewon
                         PreferenceUtilities preferenceUtilities = CrewCloudApplication.getInstance().getPreferenceUtilities();
                         String mTempDomain = "" + preferenceUtilities.getCurrentCompanyDomain();
-                        String domainSeverLogin_1 = "gw.se-won.co.kr";
                         switch (application.ProjectCode) {
                             case "_EAPP":
                                 apkFileName = "CrewApproval";
@@ -1245,8 +1098,6 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
                                 new WebClientAsync_download(finalApkFileName).execute();
                             }
                         } else {
-                            // new Async_DownloadApkFile(MainActivityV2.this, apkFileName).execute();
-                            // checkVersion();
                             final String finalApkFileName = apkFileName;
                             new WebClientAsync_download(finalApkFileName).execute();
 
@@ -1262,8 +1113,6 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
 
             startActivity(intent);
         }
-        // }
-
     }
 
     private class WebClientAsync_download extends AsyncTask<Void, Void, Void> {
@@ -1284,7 +1133,6 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
                 @Override
                 public void onSuccess(JsonNode jsonNode) {
                     try {
-                        String dataJson = jsonNode.get("version").textValue();
                         urlDownload = jsonNode.get("packageUrl").textValue();
                         if (!urlDownload.equals("")) {
                             runOnUiThread(new Runnable() {
@@ -1303,11 +1151,9 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
 
                         }
                     } catch (Exception e) {
-                        String json = jsonNode.get("data").textValue();
                         try {
                             JSONObject obj = new JSONObject(jsonNode.toString());
                             JSONObject objdata = new JSONObject(obj.get("data").toString());
-                            String dataJson = objdata.getString("version");
                             urlDownload = objdata.getString("packageUrl");
                             if (!urlDownload.equals("")) {
                                 runOnUiThread(new Runnable() {
@@ -1427,7 +1273,6 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
                                 new WebClientAsync_download(finalApkFileName).execute();
                             }
                         } else {
-                            //  new Async_DownloadApkFile(MainActivityV2.this, apkFileName).execute();
                             final String finalApkFileName = apkFileName;
                             new WebClientAsync_download(finalApkFileName).execute();
                         }
@@ -1459,11 +1304,6 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
             }
         } else {
             dismissProgressDialog();
-//            Intent newIntent = new Intent(this, MainActivityV2.class);
-//            newIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-//            startActivity(newIntent);
-//            callActivity(MainActivityV2.class);
-//            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
     }
 
@@ -1506,14 +1346,7 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
 
         protected void onPostExecute(Void unused) {
             new PreferenceUtilities().setGCMregistrationid(regID);
-//            callActivity(MainActivityV2.class);
-//            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-//            finish();
             devicePresenter.insertDevice(regID);
-
         }
-
     }
-
-
 }

@@ -25,7 +25,6 @@ public class Login_v2_Result {
     public String BirthDate;
     public String CellPhone;
     public String CompanyPhone;
-    public List<InformationCompany> informationcompany;
 
     public PreferenceUtilities prefs = CrewCloudApplication.getInstance().getPreferenceUtilities();
 

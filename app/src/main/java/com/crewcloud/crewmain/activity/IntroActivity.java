@@ -43,8 +43,6 @@ import java.net.URL;
 
 public class IntroActivity extends AppCompatActivity {
 
-    private String mCompanyName = "_woori";
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,9 +55,6 @@ public class IntroActivity extends AppCompatActivity {
         }
 
         if (checkPermissions()) {
-            /*Thread thread = new Thread(new UpdateRunnable());
-            thread.setDaemon(true);
-            thread.start();*/
             startApplication();
         } else {
             setPermissions();
@@ -69,9 +64,6 @@ public class IntroActivity extends AppCompatActivity {
     private final int MY_PERMISSIONS_REQUEST_CODE = 1;
 
     private boolean checkPermissions() {
-        // android.permission.INTERNET
-        // android.permission.WRITE_EXTERNAL_STORAGE
-
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED) {
             return false;
         } else if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -130,201 +122,6 @@ public class IntroActivity extends AppCompatActivity {
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
             finish();
-        }
-    }
-
-    // ----------------------------------------------------------------------------------------------
-
-    private class ActivityHandler extends Handler {
-        private final WeakReference<IntroActivity> mWeakActivity;
-
-        private ActivityHandler(IntroActivity activity) {
-            mWeakActivity = new WeakReference<>(activity);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            final IntroActivity activity = mWeakActivity.get();
-
-            if (activity != null) {
-                if (msg.what == Constants.ACTIVITY_HANDLER_NEXT_ACTIVITY) {
-                    startApplication();
-                } else if (msg.what == Constants.ACTIVITY_HANDLER_START_UPDATE) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                    builder.setMessage(R.string.string_update_content);
-
-                    builder.setPositiveButton(R.string.login_button_yes, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            new Async_DownloadApkFile(IntroActivity.this, "CrewMain").execute();
-                            dialog.dismiss();
-                        }
-                    });
-
-                    builder.setNegativeButton(R.string.login_button_no, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                            startApplication();
-                        }
-                    });
-
-                    AlertDialog dialog = builder.create();
-                    dialog.setCancelable(false);
-                    dialog.show();
-                }
-            }
-        }
-    }
-
-    private final ActivityHandler mActivityHandler = new ActivityHandler(this);
-
-    private class UpdateRunnable implements Runnable {
-        @Override
-        public void run() {
-            try {
-                URL txtUrl = new URL("http://www.crewcloud.net/Android/Version/CrewMain.txt");
-                HttpURLConnection urlConnection = (HttpURLConnection) txtUrl.openConnection();
-
-                InputStream inputStream = urlConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-
-                String serverVersion = bufferedReader.readLine();
-                inputStream.close();
-
-                String appVersion = BuildConfig.VERSION_NAME;
-
-                if (serverVersion.equals(appVersion)) {
-                    mActivityHandler.sendEmptyMessageDelayed(Constants.ACTIVITY_HANDLER_NEXT_ACTIVITY, 1000);
-                } else {
-                    mActivityHandler.sendEmptyMessage(Constants.ACTIVITY_HANDLER_START_UPDATE);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private class Async_DownloadApkFile extends AsyncTask<Void, Void, Void> {
-        private String mApkFileName;
-        private final WeakReference<IntroActivity> mWeakActivity;
-        private ProgressDialog mProgressDialog = null;
-
-        private Async_DownloadApkFile(IntroActivity activity, String apkFileName) {
-            mWeakActivity = new WeakReference<>(activity);
-            mApkFileName = apkFileName;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            IntroActivity activity = mWeakActivity.get();
-
-            if (activity != null) {
-                mProgressDialog = new ProgressDialog(activity);
-                mProgressDialog.setMessage(getString(R.string.mailActivity_message_download_apk));
-                mProgressDialog.setIndeterminate(true);
-                mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                mProgressDialog.setCancelable(false);
-                mProgressDialog.show();
-            }
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            HttpURLConnection urlConnection = null;
-            InputStream inputStream = null;
-            BufferedInputStream bufferedInputStream = null;
-            FileOutputStream fileOutputStream = null;
-
-            try {
-                //URL apkUrl = new URL("http://www.crewcloud.net/Android/Package/CrewMain__woori.apk");
-               URL apkUrl = new URL("http://www.crewcloud.net/Android/Package/CrewMain.apk");
-                urlConnection = (HttpURLConnection) apkUrl.openConnection();
-                inputStream = urlConnection.getInputStream();
-                bufferedInputStream = new BufferedInputStream(inputStream);
-
-                String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/download/" + mApkFileName + ".apk";
-                fileOutputStream = new FileOutputStream(filePath);
-
-                byte[] buffer = new byte[4096];
-                int readCount;
-
-                while (true) {
-                    readCount = bufferedInputStream.read(buffer);
-                    if (readCount == -1) {
-                        break;
-                    }
-
-                    fileOutputStream.write(buffer, 0, readCount);
-                    fileOutputStream.flush();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                if (fileOutputStream != null) {
-                    try {
-                        fileOutputStream.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                if (bufferedInputStream != null) {
-                    try {
-                        bufferedInputStream.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                if (inputStream != null) {
-                    try {
-                        inputStream.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                if (urlConnection != null) {
-                    try {
-                        urlConnection.disconnect();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-
-            IntroActivity activity = mWeakActivity.get();
-
-            if (activity != null) {
-               String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/download/" + mApkFileName + ".apk";
-              //  String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/download/" + mApkFileName + "_woori.apk";
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    Uri apkUri = FileProvider.getUriForFile(activity, BuildConfig.APPLICATION_ID + ".provider", new File(filePath));
-                    Intent intent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
-                    intent.setData(apkUri);
-                    intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                    activity.startActivity(intent);
-                } else {
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setDataAndType(Uri.fromFile(new File(filePath)), "application/vnd.android.package-archive");
-                    activity.startActivity(intent);
-                }
-            }
-
-            if (mProgressDialog != null) {
-                mProgressDialog.dismiss();
-            }
         }
     }
 

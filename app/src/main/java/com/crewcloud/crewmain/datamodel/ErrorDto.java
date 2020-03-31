@@ -21,14 +21,6 @@ public class ErrorDto {
                 '}';
     }
 
-    public boolean isUnAuthentication() {
-        return unAuthentication;
-    }
-
-    public void setUnAuthentication(boolean unAuthentication) {
-        this.unAuthentication = unAuthentication;
-    }
-
     public int getCode() {
         return code;
     }

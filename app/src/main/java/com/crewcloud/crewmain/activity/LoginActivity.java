@@ -50,25 +50,13 @@ public class LoginActivity extends BaseActivity {
     public PreferenceUtilities mPrefs;
     private boolean mFirstLogin = true;
     private String mInputUsername, mInputPassword;
-    private String mCompanyName = "_woori";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-
-//        if (checkPermissions()) {
-//            Thread thread = new Thread(new LoginActivity.UpdateRunnable());
-//            thread.setDaemon(true);
-//            thread.start();
-//        } else {
-//            setPermissions();
-//        }
-
         mPrefs = CrewCloudApplication.getInstance().getPreferenceUtilities();
-
         init();
 
         final SoftKeyboardDetectorView softKeyboardDetectorView = new SoftKeyboardDetectorView(this);
@@ -269,8 +257,6 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-
-    // ------------------------------------------------------------------------------------------------
 
     private class WebClientAsync_Login_v2 extends AsyncTask<Void, Void, Void> {
         private String mCompanyDomain, mTempServerSite;

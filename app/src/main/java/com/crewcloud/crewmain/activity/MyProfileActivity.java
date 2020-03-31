@@ -79,7 +79,6 @@ public class MyProfileActivity extends BaseActivity {
         }
         ButterKnife.bind(this);
         new WebClientAsync_checkVersion().execute();
-        //showData();
     }
 
     private class WebClientAsync_checkVersion extends AsyncTask<Void, Void, Void> {
@@ -93,7 +92,6 @@ public class MyProfileActivity extends BaseActivity {
                         if (jsonNode.get("success").asInt() == 0) {
 
                         } else {
-                         //   ObjectMapper mapper = new ObjectMapper();
                             String dataJson = jsonNode.get("data").toString();
                             Gson gson = new Gson();
                              userDto = gson.fromJson(dataJson, UserDetailDto.class);
@@ -122,39 +120,10 @@ public class MyProfileActivity extends BaseActivity {
         }
     }
 
-    private void showData() {
-        PreferenceUtilities preferenceUtilities = CrewCloudApplication.getInstance().getPreferenceUtilities();
-        String companyName = preferenceUtilities.getCurrentCompanyName();
-        String name = preferenceUtilities.getFullName();
-        String email = preferenceUtilities.getEmail();
-        String pass = preferenceUtilities.getPass();
-        String avatar = preferenceUtilities.getAvatar();
-        tvName.setText(name);
-        tvEmail.setText(email);
-        tvPass.setText(pass);
-        tvCompanyName.setText(companyName);
-        tvCompanyId.setText(preferenceUtilities.getCurrentCompanyDomain());
-        tvPersionId.setText(preferenceUtilities.getUserId());
-        tvPhone.setText(preferenceUtilities.getCellPhone());
-        tvCompanyPhone.setText(preferenceUtilities.getCompanyPhone());
-        if (!TextUtils.isEmpty(preferenceUtilities.getEntranceDate())) {
-            tvEntranceDate.setText(Util.displayTimeWithoutOffset(preferenceUtilities.getEntranceDate()));
-        }
-        if (!TextUtils.isEmpty(preferenceUtilities.getBirthDay())) {
-            tvBirthday.setText(Util.displayTimeWithoutOffset(preferenceUtilities.getBirthDay()));
-        }
-        if (!TextUtils.isEmpty(avatar)) {
-            Picasso.with(this).load(CrewCloudApplication.getInstance().getPreferenceUtilities().getCurrentServiceDomain() + avatar)
-                    .placeholder(R.mipmap.avatar_default).into(ivAvatar);
-        }
-    }
 
     private void fillData(UserDetailDto userDetailDto) {
         PreferenceUtilities preferenceUtilities = CrewCloudApplication.getInstance().getPreferenceUtilities();
         String companyName = preferenceUtilities.getCurrentCompanyName();
-        String name = preferenceUtilities.getFullName();
-        String email = preferenceUtilities.getEmail();
-        String pass = preferenceUtilities.getPass();
         String avatar = preferenceUtilities.getAvatar();
         tvName.setText(userDetailDto.getName());
         tvEmail.setText(userDetailDto.getMailAddress());

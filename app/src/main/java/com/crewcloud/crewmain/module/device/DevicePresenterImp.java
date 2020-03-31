@@ -30,18 +30,12 @@ public class DevicePresenterImp extends BasePresenter<DevicePresenter.view> impl
 
     @Override
     public void insertDevice(String regId) {
-        final String sessionId = CrewCloudApplication.getInstance().getPreferenceUtilities().getCurrentMobileSessionId();
-        long timeZoneOffset = Util.getTimeOffsetInMinute();
-        String languageCode = Util.getPhoneLanguage();
-
-
         final String url = CrewCloudApplication.getInstance().getPreferenceUtilities().getCurrentServiceDomain() + Constants.URL_INSERT_DEVICE;
         Map<String, String> params = new HashMap<>();
         params.put("sessionId", "" + CrewCloudApplication.getInstance().getPreferenceUtilities().getCurrentMobileSessionId());
         params.put("languageCode", Locale.getDefault().getLanguage().toUpperCase());
         params.put("timeZoneOffset", TimeUtils.getTimezoneOffsetInMinutes());
         params.put("deviceID", regId);
-       // params.put("deviceID", "fTQ3RcX3eJc:APA91bGiPiWcFznQcw-9zCGmTr7kt7bxuTdHxThGn1EzmxNNKbVzG3UMBYEbsCa9Rz-YfOqWzAaS3ovxX-TGWwJZwGb-arUTuUqb7geCOVI5v0-Svl3uWctpz6O8vyj-RA3PJbLVkPPI");
         params.put("osVersion", android.os.Build.VERSION.RELEASE);
         params.put("notificationOptions", "");
         WebServiceManager webServiceManager = new WebServiceManager();

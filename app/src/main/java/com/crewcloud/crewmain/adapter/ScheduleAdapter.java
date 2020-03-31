@@ -45,7 +45,6 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ((ScheduleAdapter.ViewHolder) holder).bind(position);
-
     }
 
 
@@ -56,12 +55,6 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
         return lstApp.size();
     }
-
-    public void clear() {
-        lstApp.clear();
-        notifyDataSetChanged();
-    }
-
 
     class ViewHolder extends RecyclerView.ViewHolder {
 

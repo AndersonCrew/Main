@@ -34,25 +34,6 @@ public class ChangePassPresenterImp extends BasePresenter<ChangePassPresenter.vi
     public void ChangePass(String oldPass, final String newPass) {
         final String sessionId = CrewCloudApplication.getInstance().getPreferenceUtilities().getCurrentMobileSessionId();
         long timeZoneOffset = Util.getTimeOffsetInMinute();
-        String languageCode = Util.getPhoneLanguage();
-
-
-
-//        activity.showProgressDialog();
-//        activity.requestAPI(activity.getApi().changePass(request), new ResponseListener<BaseResponse<MenuResponse<Boolean>>>() {
-//            @Override
-//            public void onSuccess(BaseResponse<MenuResponse<Boolean>> result) {
-//                activity.dismissProgressDialog();
-//                getView().ChangePassSuccess();
-//
-//            }
-//
-//            @Override
-//            public void onError(@NonNull ErrorDto messageResponse) {
-//                activity.dismissProgressDialog();
-//                getView().ChangePassError(messageResponse.getMessage());
-//            }
-//        });
 
         final String url = CrewCloudApplication.getInstance().getPreferenceUtilities().getCurrentServiceDomain() + Constants.URL_CHANGE_PASS;
         Map<String, String> params = new HashMap<>();
@@ -65,7 +46,6 @@ public class ChangePassPresenterImp extends BasePresenter<ChangePassPresenter.vi
         webServiceManager.doJsonObjectRequest(Request.Method.POST, url, new JSONObject(params), new WebServiceManager.RequestListener<String>() {
             @Override
             public void onSuccess(String response) {
-
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     String newSessionId = jsonObject.getString("newSessionID");
@@ -76,9 +56,7 @@ public class ChangePassPresenterImp extends BasePresenter<ChangePassPresenter.vi
                     e.printStackTrace();
                 }
 
-
                 getView().ChangePassSuccess();
-
             }
 
             @Override

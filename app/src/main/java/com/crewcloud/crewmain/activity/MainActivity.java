@@ -101,8 +101,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         Login_v2_Result loginResult = new Gson().fromJson(preferenceUtilities.getUserData(), Login_v2_Result.class);
-        TextView tv_name = (TextView) header.findViewById(R.id.tv_name);
-        ImageView ivSetting = (ImageView) header.findViewById(R.id.iv_setting);
+        TextView tv_name = header.findViewById(R.id.tv_name);
+        ImageView ivSetting = header.findViewById(R.id.iv_setting);
 
         ivSetting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             tv_name.setText(loginResult.FullName);
         }
 
-        TextView tv_email = (TextView) header.findViewById(R.id.tv_email);
+        TextView tv_email = header.findViewById(R.id.tv_email);
 
         if (!TextUtils.isEmpty(loginResult.NameCompany)) {
             tv_email.setText(loginResult.NameCompany);
@@ -126,10 +126,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         new WebClientAsync_GetEnabledApplications().execute();
     }
-    // Fetches reg id from shared preferences
-    // and displays on the screen
-
-    // ----------------------------------------------------------------------------------------------
 
     private boolean mIsBackPressed = false;
 
@@ -172,7 +168,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    // ----------------------------------------------------------------------------------------------
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -188,8 +183,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         return true;
     }
-
-    // ----------------------------------------------------------------------------------------------
 
     private FlowLayout fl_enabled_applications;
     private RelativeLayout rl_approval_documents, rl_unread_mails, rl_schedule, rl_notice;
@@ -211,7 +204,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void setListOfApplications() {
         fl_enabled_applications.removeAllViews();
-
 
         LayoutInflater layoutInflater = getLayoutInflater();
         LinearLayout ll_inflate_layout_app_item;
@@ -240,9 +232,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             ll_inflate_layout_app_item.setTag(application);
             ll_inflate_layout_app_item.setOnClickListener(this);
 
-            iv_inflate_layout_app_item_icon = (ImageView) ll_inflate_layout_app_item.findViewById(R.id.iv_inflate_layout_app_item_icon);
-            tv_inflate_layout_app_item_name = (TextView) ll_inflate_layout_app_item.findViewById(R.id.tv_inflate_layout_app_item_name);
-            tvBadge = (TextView) ll_inflate_layout_app_item.findViewById(R.id.badge_notification_3);
+            iv_inflate_layout_app_item_icon = ll_inflate_layout_app_item.findViewById(R.id.iv_inflate_layout_app_item_icon);
+            tv_inflate_layout_app_item_name = ll_inflate_layout_app_item.findViewById(R.id.tv_inflate_layout_app_item_name);
+            tvBadge = ll_inflate_layout_app_item.findViewById(R.id.badge_notification_3);
 
             switch (application.ProjectCode) {
                 case "_EAPP": {
@@ -315,8 +307,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         tvBadge.setVisibility(View.VISIBLE);
                         tvBadge.setText(application.totalUnreadCount);
                     }
-//                    tvBadge.setVisibility(View.VISIBLE);
-//                    tvBadge.setText("2");
                     break;
                 }
 
@@ -326,14 +316,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
 
                 default: {
-//                    iv_inflate_layout_app_item_icon.setImageResource(R.drawable.ic_apps_other);
                     break;
                 }
             }
-
-//            tv_inflate_layout_app_item_name.setLayoutParams(new LinearLayout.LayoutParams(150, LinearLayout.LayoutParams.WRAP_CONTENT));
-//            tv_inflate_layout_app_item_name.setSingleLine(true);
-//            tv_inflate_layout_app_item_name.setGravity(Gravity.CENTER);
             tv_inflate_layout_app_item_name.setText(application.ApplicationName);
         }
     }
@@ -349,9 +334,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             rl_inflate_layout_approval_document_item = (RelativeLayout) layoutInflater.inflate(R.layout.inflate_layout_approval_document_item, ll_approval_documents, false);
             ll_approval_documents.addView(rl_inflate_layout_approval_document_item);
 
-            tv_inflate_layout_approval_document_item_type = (TextView) rl_inflate_layout_approval_document_item.findViewById(R.id.tv_inflate_layout_approval_document_item_type);
-            tv_inflate_layout_approval_document_item_title = (TextView) rl_inflate_layout_approval_document_item.findViewById(R.id.tv_inflate_layout_approval_document_item_title);
-            tv_inflate_layout_approval_document_item_date = (TextView) rl_inflate_layout_approval_document_item.findViewById(R.id.tv_inflate_layout_approval_document_item_date);
+            tv_inflate_layout_approval_document_item_type = rl_inflate_layout_approval_document_item.findViewById(R.id.tv_inflate_layout_approval_document_item_type);
+            tv_inflate_layout_approval_document_item_title = rl_inflate_layout_approval_document_item.findViewById(R.id.tv_inflate_layout_approval_document_item_title);
+            tv_inflate_layout_approval_document_item_date = rl_inflate_layout_approval_document_item.findViewById(R.id.tv_inflate_layout_approval_document_item_date);
 
             tv_inflate_layout_approval_document_item_type.setText("[" + document.AccessName + "]");
             tv_inflate_layout_approval_document_item_title.setText(document.Title);
@@ -370,11 +355,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             rl_inflate_layout_schedule_item = (RelativeLayout) layoutInflater.inflate(R.layout.inflate_layout_schedule_item, ll_schedule, false);
             ll_schedule.addView(rl_inflate_layout_schedule_item);
 
-            tv_inflate_layout_unread_mail_item_name = (TextView) rl_inflate_layout_schedule_item.findViewById(R.id.tv_inflate_layout_unread_mail_item_name);
-            //tv_inflate_layout_unread_mail_item_date = (TextView)rl_inflate_layout_schedule_item.findViewById(R.id.tv_inflate_layout_unread_mail_item_date);
-
+            tv_inflate_layout_unread_mail_item_name = rl_inflate_layout_schedule_item.findViewById(R.id.tv_inflate_layout_unread_mail_item_name);
             tv_inflate_layout_unread_mail_item_name.setText(scheduleDocument.Title);
-            //tv_inflate_layout_unread_mail_item_date.setText(scheduleDocument.RegDate);
         }
     }
 
@@ -389,8 +371,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             rl_inflate_layout_schedule_item = (RelativeLayout) layoutInflater.inflate(R.layout.inflate_layout_schedule_item, ll_notice, false);
             ll_notice.addView(rl_inflate_layout_schedule_item);
 
-            tv_inflate_layout_unread_mail_item_name = (TextView) rl_inflate_layout_schedule_item.findViewById(R.id.tv_inflate_layout_unread_mail_item_name);
-            tv_inflate_layout_unread_mail_item_date = (TextView) rl_inflate_layout_schedule_item.findViewById(R.id.tv_inflate_layout_unread_mail_item_date);
+            tv_inflate_layout_unread_mail_item_name = rl_inflate_layout_schedule_item.findViewById(R.id.tv_inflate_layout_unread_mail_item_name);
+            tv_inflate_layout_unread_mail_item_date = rl_inflate_layout_schedule_item.findViewById(R.id.tv_inflate_layout_unread_mail_item_date);
 
             tv_inflate_layout_unread_mail_item_name.setText(noticeDocument.Title);
             tv_inflate_layout_unread_mail_item_date.setText(noticeDocument.DivisionName);
@@ -410,15 +392,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             rl_inflate_layout_unread_mail_item.setTag(mail);
             rl_inflate_layout_unread_mail_item.setOnClickListener(this);
 
-            tv_inflate_layout_unread_mail_item_name = (TextView) rl_inflate_layout_unread_mail_item.findViewById(R.id.tv_inflate_layout_unread_mail_item_name);
-                tv_inflate_layout_unread_mail_item_date = (TextView) rl_inflate_layout_unread_mail_item.findViewById(R.id.tv_inflate_layout_unread_mail_item_date);
+            tv_inflate_layout_unread_mail_item_name = rl_inflate_layout_unread_mail_item.findViewById(R.id.tv_inflate_layout_unread_mail_item_name);
+                tv_inflate_layout_unread_mail_item_date = rl_inflate_layout_unread_mail_item.findViewById(R.id.tv_inflate_layout_unread_mail_item_date);
 
             tv_inflate_layout_unread_mail_item_name.setText(mail.Title);
             tv_inflate_layout_unread_mail_item_date.setText(mail.RegDate);
         }
     }
-
-    // ----------------------------------------------------------------------------------------------
 
     private List<Application> mListOfApplications;
     private List<ApprovalDocument> mListOfApprovalDocuments;
@@ -448,13 +428,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     int length = data.size();
 
                                     mListOfApplications = new ArrayList<>();
-                                    // = new Application();
-                                    //application.ApplicationNo = 0;
-                                    //application.ProjectCode = "CrewChat";
-                                    //application.ApplicationName = getString(R.string.app_name_crewchat);
-                                    //application.PackageName = "com.dazone.crewchat";
-
-                                    //mListOfApplications.add(application);
 
                                     JsonNode appNode;
 
@@ -604,20 +577,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     }.getType());
 
                                     if (!listSchedule.isEmpty()) {
-//                                    scheduleDocument.ScheduleNo = itemNode.get("ScheduleNo").asLong();
-//                                    scheduleDocument.CalendarNo = itemNode.get("CalendarNo").asLong();
-//                                    scheduleDocument.Title = itemNode.get("Title").asText();
-//                                    scheduleDocument.CalendarType = itemNode.get("CalendarType").asInt();
-//                                    scheduleDocument.DivisionNo = itemNode.get("DivisionNo").asInt();
-//                                    scheduleDocument.CalendarColor = itemNode.get("CalendarColor").asText();
-//                                    scheduleDocument.StartTime = itemNode.get("StartTime").asText();
-//                                    scheduleDocument.EndTime = itemNode.get("EndTime").asText();
-//                                    mListOfScheduleDocuments.add(scheduleDocument);
-//                                        for (int j = 0; j < listSchedule.size(); j++) {
-//                                            ScheduleDocument scheduleDocument = listSchedule.get(i);
-//                                            mListOfScheduleDocuments.add(scheduleDocument);
                                         mListOfScheduleDocuments.addAll(listSchedule);
-//                                        }
                                     }
                                 }
                             } catch (Exception e) {
@@ -736,7 +696,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                         appNode = data.get(i);
 
                                         notice = new NoticeDocument();
-//                                        mListOfNotices.add(notice);
                                         notice.Title = appNode.get("Title").asText();
                                         notice.DivisionName = appNode.get("DivisionName").asText();
                                         mListOfNotices.add(notice);
@@ -766,8 +725,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }
     }
-
-    // ----------------------------------------------------------------------------------------------
 
     private class Async_DownloadApkFile extends AsyncTask<Void, Void, Void> {
         private String mApkFileName;
@@ -922,8 +879,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             finish();
         }
     }
-
-    // ----------------------------------------------------------------------------------------------
 
     @Override
     public void onClick(View view) {

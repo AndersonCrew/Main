@@ -4,10 +4,14 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.android.volley.Request;
 import com.crewcloud.crewmain.CrewCloudApplication;
+import com.crewcloud.crewmain.callbacks.LoginCallBack;
+import com.crewcloud.crewmain.datamodel.ErrorDto;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -38,8 +42,6 @@ public class WebClient {
     private static final String MAIL_URL_GET_SCHEDULE_LIST = "/UI/MobileSchedule/MobileDataService.asmx/GetPeriodSchedules";
     private static final String MAIL_URL_GET_NOTICE_LIST = "/UI/MobileNotice/NoticeService.asmx/GetNotices";
     public static final String URL_GET_USER = "/UI/WebService/WebServiceCenter.asmx/GetUser";
-
-    // ----------------------------------------------------------------------------------------------
 
     public interface OnWebClientListener {
         void onSuccess(JsonNode jsonNode);
@@ -122,27 +124,25 @@ public class WebClient {
         return "";
     }
 
-    // ----------------------------------------------------------------------------------------------
-
-    public static void Login_v2(String languageCode, long timeZoneOffset, String companyDomain, String userID, String password, String mobileOSVersion, String _domain, OnWebClientListener listener) {
+    public static void Login_v2(String languageCode, long timeZoneOffset, String userID, String password, String mobileOSVersion, LoginCallBack listener) {
         Map<String, Object> mapParams = new HashMap<>();
         mapParams.put("languageCode", languageCode);
         mapParams.put("timeZoneOffset", timeZoneOffset);
-        mapParams.put("companyDomain", companyDomain);
+        mapParams.put("companyDomain", CrewCloudApplication.getInstance().getPreferenceUtilities().getStringValue(Constants.COMPANY_NAME, "") );
         mapParams.put("userID", userID);
         mapParams.put("password", password);
         mapParams.put("mobileOSVersion", mobileOSVersion);
 
-        String result = getJSONStringFromUrl(_domain + SERVICE_URL_LOGIN_V2, mapParams);
+        String result = getJSONStringFromUrl(CrewCloudApplication.getInstance().getPreferenceUtilities().getStringValue(Constants.DOMAIN, "") + SERVICE_URL_LOGIN_V2, mapParams);
         Log.d("ssssss", mapParams.toString());
         if (TextUtils.isEmpty(result)) {
-            listener.onFailure();
+            listener.onLoginFail();
         } else {
             try {
-                listener.onSuccess(mJSONObjectMapper.readTree(result).get("d"));
+                listener.onLoginSuccess(result);
             } catch (Exception e) {
                 e.printStackTrace();
-                listener.onFailure();
+                listener.onLoginFail();
             }
         }
     }
@@ -169,7 +169,6 @@ public class WebClient {
     }
 
     public static void checkVersionUpdate(Context context, OnWebClientListener listener, String nameApp) {
-        //Map<String, Object> mapParams = new HashMap<>();
         Map<String, Object> params = new HashMap<>();
         PreferenceUtilities preferenceUtilities = CrewCloudApplication.getInstance().getPreferenceUtilities();
 
@@ -179,7 +178,7 @@ public class WebClient {
         params.put("Applications", "" + nameApp);
         Log.d("sssDebug", params.toString());
         String result = getJSONStringFromUrl(URL_CHECK_UPDATE, params);
-        Log.d("sssDebug", result.toString());
+        Log.d("sssDebug", result);
         if (TextUtils.isEmpty(result)) {
             listener.onFailure();
         } else {
@@ -189,19 +188,6 @@ public class WebClient {
                 e.printStackTrace();
                 listener.onFailure();
             }
-        }
-    }
-
-    private static String getServerSite(String server_site) {
-        String[] domains = server_site.split("[.]");
-        if (server_site.contains(".bizsw.co.kr") && !server_site.contains("8080")) {
-            return server_site.replace(".bizsw.co.kr", ".bizsw.co.kr:8080");
-        }
-
-        if (domains.length == 1) {
-            return domains[0] + ".crewcloud.net";
-        } else {
-            return server_site;
         }
     }
 
@@ -262,8 +248,6 @@ public class WebClient {
             }
         }
     }
-
-    // ----------------------------------------------------------------------------------------------
 
     public static void GetApprovalList(String languageCode, int timeZoneOffset, String sessionId, int countPerList, String _domain, OnWebClientListener listener) {
         Map<String, Object> mapParams = new HashMap<>();
@@ -348,5 +332,33 @@ public class WebClient {
                 listener.onFailure();
             }
         }
+    }
+
+    /*Check SSL*/
+    public static void checkSSL(final ICheckSSL checkSSL) {
+        final String url = Config.URL_CHECK_SSL;
+        Map<String, String> params = new HashMap<>();
+        params.put("Domain", CrewCloudApplication.getInstance().getPreferenceUtilities().getCurrentCompanyDomain());
+        params.put("Applications", "CrewApproval");
+
+        WebServiceManager webServiceManager = new WebServiceManager();
+        webServiceManager.doJsonObjectRequest(Request.Method.POST, url, new JSONObject(params), new WebServiceManager.RequestListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    boolean hasSSL = jsonObject.getBoolean("SSL");
+                    CrewCloudApplication.getInstance().getPreferenceUtilities().putBooleanValue(Constants.HAS_SSL, hasSSL);
+                    checkSSL.hasSSL(hasSSL);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(ErrorDto error) {
+                checkSSL.checkSSLError(error);
+            }
+        });
     }
 }

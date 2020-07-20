@@ -135,10 +135,10 @@ public class Util {
         builder.setView(dialogView);
 
         // Get the custom alert dialog view widgets reference
-        Button btn_positive = (Button) dialogView.findViewById(R.id.btn_yes);
-        Button btn_negative = (Button) dialogView.findViewById(R.id.btn_no);
-        TextView txtTitle = (TextView) dialogView.findViewById(R.id.txt_dialog_title);
-        TextView txtContent = (TextView) dialogView.findViewById(R.id.txt_dialog_content);
+        Button btn_positive = dialogView.findViewById(R.id.btn_yes);
+        Button btn_negative = dialogView.findViewById(R.id.btn_no);
+        TextView txtTitle = dialogView.findViewById(R.id.txt_dialog_title);
+        TextView txtContent = dialogView.findViewById(R.id.txt_dialog_content);
 
         btn_negative.setVisibility(View.GONE);
         btn_positive.setText(okButton);
@@ -146,32 +146,14 @@ public class Util {
         txtTitle.setText(title);
         txtContent.setText(message);
 
-//        Button btn_neutral = (Button) dialogView.findViewById(R.id.dialog_neutral_btn);
-
-        // Create the alert dialog
         final android.app.AlertDialog dialog = builder.create();
 
-        // Set negative/no button click listener
         btn_positive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Dismiss the alert dialog
-//                if (clickEvent != null) {
-//                    clickEvent.onCancelClick();
-//                }
                 dialog.cancel();
             }
         });
-
-        // Set cancel/neutral button click listener
-//        btn_neutral.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // Dismiss/cancel the alert dialog
-//                dialog.cancel();
-//                tv_message.setText("Cancel button clicked");
-//            }
-//        });
 
         // Display the custom alert dialog on interface
         if (!context.isFinishing()) {
@@ -196,26 +178,22 @@ public class Util {
         builder.setView(dialogView);
 
         // Get the custom alert dialog view widgets reference
-        Button btn_positive = (Button) dialogView.findViewById(R.id.btn_yes);
-        Button btn_negative = (Button) dialogView.findViewById(R.id.btn_no);
-        TextView txtTitle = (TextView) dialogView.findViewById(R.id.txt_dialog_title);
-        TextView txtContent = (TextView) dialogView.findViewById(R.id.txt_dialog_content);
+        Button btn_positive = dialogView.findViewById(R.id.btn_yes);
+        Button btn_negative = dialogView.findViewById(R.id.btn_no);
+        TextView txtTitle = dialogView.findViewById(R.id.txt_dialog_title);
+        TextView txtContent = dialogView.findViewById(R.id.txt_dialog_content);
 
         btn_negative.setText(noButton);
         btn_positive.setText(okButton);
         txtTitle.setText(title);
         txtContent.setText(message);
 
-//        Button btn_neutral = (Button) dialogView.findViewById(R.id.dialog_neutral_btn);
-
         // Create the alert dialog
         final android.app.AlertDialog dialog = builder.create();
 
-        // Set positive/yes button click listener
         btn_positive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Dismiss the alert dialog
                 if (clickEvent != null) {
                     clickEvent.onOkClick(dialog);
                 }
@@ -235,20 +213,33 @@ public class Util {
             }
         });
 
-        // Set cancel/neutral button click listener
-//        btn_neutral.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // Dismiss/cancel the alert dialog
-//                dialog.cancel();
-//                tv_message.setText("Cancel button clicked");
-//            }
-//        });
-
-        // Display the custom alert dialog on interface
         dialog.show();
 
     }
 
+    public static String setServerSite(String domain) {
+        String[] domains = domain.split("[.]");
+        if (domain.contains(".bizsw.co.kr") && !domain.contains("8080")) {
+            domain =  domain.replace(".bizsw.co.kr", ".bizsw.co.kr:8080");
+        }
+
+        if (domains.length == 1) {
+            domain = domains[0] + ".crewcloud.net";
+        }
+
+        if(domain.startsWith("http://")){
+            domain = domain.replace("http://", "");
+        }
+
+        if(domain.startsWith("https://")) {
+            domain = domain.replace("https://", "");
+        }
+
+        String head = CrewCloudApplication.getInstance().getPreferenceUtilities().getBooleanValue(Constants.HAS_SSL, false) ? "https://" : "http://";
+        String domainCompany = head + domain;
+        CrewCloudApplication.getInstance().getPreferenceUtilities().putStringValue(Constants.DOMAIN, domainCompany);
+        CrewCloudApplication.getInstance().getPreferenceUtilities().putStringValue(Constants.COMPANY_NAME, domain);
+        return domainCompany;
+    }
 
 }

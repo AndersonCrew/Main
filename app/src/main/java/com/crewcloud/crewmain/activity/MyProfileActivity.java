@@ -5,24 +5,17 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 
 import com.crewcloud.crewmain.R;
 import com.crewcloud.crewmain.CrewCloudApplication;
 import com.crewcloud.crewmain.datamodel.BelongDepartmentDTO;
-import com.crewcloud.crewmain.datamodel.Login_v2_Result;
 import com.crewcloud.crewmain.datamodel.UserDetailDto;
 import com.crewcloud.crewmain.util.PreferenceUtilities;
-import com.crewcloud.crewmain.util.TimeUtils;
 import com.crewcloud.crewmain.util.Util;
 import com.crewcloud.crewmain.util.WebClient;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
@@ -85,7 +78,7 @@ public class MyProfileActivity extends BaseActivity {
         UserDetailDto userDto;
         @Override
         protected Void doInBackground(Void... params) {
-            WebClient.getUser("http://" + CrewCloudApplication.getInstance().getPreferenceUtilities().getCurrentCompanyDomain(), new WebClient.OnWebClientListener() {
+            WebClient.getUser(CrewCloudApplication.getInstance().getPreferenceUtilities().getDomain(), new WebClient.OnWebClientListener() {
                 @Override
                 public void onSuccess(JsonNode jsonNode) {
                     try {

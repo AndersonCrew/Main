@@ -128,7 +128,6 @@ public class IntroActivity extends AppCompatActivity {
     private class WebClientAsync_CheckSessionUser_v2 extends AsyncTask<Void, Void, Void> {
         private boolean mIsFailed;
         private boolean mIsSuccess;
-        private String mCompanyName;
 
         @Override
         protected void onPreExecute() {
@@ -141,7 +140,7 @@ public class IntroActivity extends AppCompatActivity {
 
             WebClient.CheckSessionUser_v2(DeviceUtilities.getLanguageCode(),
                     DeviceUtilities.getTimeZoneOffset(), preferenceUtilities.getCurrentMobileSessionId(),
-                    "http://" + preferenceUtilities.getCurrentCompanyDomain(),
+                    preferenceUtilities.getDomain(),
                     new WebClient.OnWebClientListener() {
                         @Override
                         public void onSuccess(JsonNode jsonNode) {
@@ -149,7 +148,6 @@ public class IntroActivity extends AppCompatActivity {
 
                             try {
                                 mIsSuccess = (jsonNode.get("success").asInt() == 1);
-                                mCompanyName = jsonNode.get("data").get("NameCompany").asText();
                             } catch (Exception e) {
                                 e.printStackTrace();
                                 mIsSuccess = false;
@@ -177,8 +175,6 @@ public class IntroActivity extends AppCompatActivity {
                 PreferenceUtilities preferenceUtilities = CrewCloudApplication.getInstance().getPreferenceUtilities();
 
                 if (mIsSuccess) {
-                    preferenceUtilities.setCurrentCompanyName(mCompanyName);
-
                     Intent intent = new Intent(IntroActivity.this, MainActivityV2.class);
                     startActivity(intent);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

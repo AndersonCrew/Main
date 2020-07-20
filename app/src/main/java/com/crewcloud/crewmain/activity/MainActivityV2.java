@@ -42,7 +42,7 @@ import com.crewcloud.crewmain.adapter.ScheduleAdapter;
 import com.crewcloud.crewmain.adapter.UnreadMailAdapter;
 import com.crewcloud.crewmain.datamodel.Application;
 import com.crewcloud.crewmain.datamodel.ApprovalDocument;
-import com.crewcloud.crewmain.datamodel.Login_v2_Result;
+import com.crewcloud.crewmain.datamodel.LoginDto;
 import com.crewcloud.crewmain.datamodel.Mail;
 import com.crewcloud.crewmain.datamodel.NoticeDocument;
 import com.crewcloud.crewmain.datamodel.ScheduleDocument;
@@ -161,7 +161,7 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
             setTitle(preferenceUtilities.getCurrentCompanyName());
         }
 
-        Login_v2_Result loginResult = new Gson().fromJson(preferenceUtilities.getUserData(), Login_v2_Result.class);
+        LoginDto loginResult = new Gson().fromJson(preferenceUtilities.getUserData(), LoginDto.class);
         TextView tv_name = header.findViewById(R.id.tv_name);
         ImageView ivSetting = header.findViewById(R.id.iv_setting);
 
@@ -623,7 +623,7 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
             PreferenceUtilities preferenceUtilities = CrewCloudApplication.getInstance().getPreferenceUtilities();
 
             WebClient.GetEnabledApplications(DeviceUtilities.getLanguageCode(), DeviceUtilities.getTimeZoneOffset(), preferenceUtilities.getCurrentMobileSessionId(),
-                    "http://" + preferenceUtilities.getCurrentCompanyDomain(), new WebClient.OnWebClientListener() {
+                   preferenceUtilities.getDomain(), new WebClient.OnWebClientListener() {
                         @Override
                         public void onSuccess(JsonNode jsonNode) {
                             mIsFailed = false;
@@ -702,7 +702,7 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
             PreferenceUtilities preferenceUtilities = CrewCloudApplication.getInstance().getPreferenceUtilities();
 
             WebClient.GetApprovalList(DeviceUtilities.getLanguageCode(), DeviceUtilities.getTimeZoneOffset(), preferenceUtilities.getCurrentMobileSessionId(),
-                    10, "http://" + preferenceUtilities.getCurrentCompanyDomain(), new WebClient.OnWebClientListener() {
+                    10, preferenceUtilities.getDomain(), new WebClient.OnWebClientListener() {
                         @Override
                         public void onSuccess(JsonNode jsonNode) {
                             mIsFailed = false;
@@ -838,7 +838,7 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
             String endDay = sdf.format(c.getTime());
             int scheduleType = 0;
             WebClient.GetScheduleList(DeviceUtilities.getLanguageCode(), DeviceUtilities.getTimeZoneOffset(), preferenceUtilities.getCurrentMobileSessionId(),
-                    startDay, endDay, scheduleType, "http://" + preferenceUtilities.getCurrentCompanyDomain(), new WebClient.OnWebClientListener() {
+                    startDay, endDay, scheduleType, preferenceUtilities.getDomain(), new WebClient.OnWebClientListener() {
                         @Override
                         public void onSuccess(JsonNode jsonNode) {
                             mIsFailed = false;
@@ -903,7 +903,7 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
             PreferenceUtilities preferenceUtilities = CrewCloudApplication.getInstance().getPreferenceUtilities();
 
             WebClient.GetUnreadMails(DeviceUtilities.getLanguageCode(), DeviceUtilities.getTimeZoneOffset(), preferenceUtilities.getCurrentMobileSessionId(),
-                    10, "http://" + preferenceUtilities.getCurrentCompanyDomain(), new WebClient.OnWebClientListener() {
+                    10, preferenceUtilities.getDomain(), new WebClient.OnWebClientListener() {
                         @Override
                         public void onSuccess(JsonNode jsonNode) {
                             mIsFailed = false;
@@ -965,7 +965,7 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
             PreferenceUtilities preferenceUtilities = CrewCloudApplication.getInstance().getPreferenceUtilities();
 
             WebClient.GetNoticeList(DeviceUtilities.getLanguageCode(), DeviceUtilities.getTimeZoneOffset(), preferenceUtilities.getCurrentMobileSessionId(),
-                    10, "http://" + preferenceUtilities.getCurrentCompanyDomain(), new WebClient.OnWebClientListener() {
+                    10, preferenceUtilities.getDomain(), new WebClient.OnWebClientListener() {
                         @Override
                         public void onSuccess(JsonNode jsonNode) {
                             mIsFailed = false;

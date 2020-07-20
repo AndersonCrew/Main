@@ -1,6 +1,5 @@
 package com.crewcloud.crewmain.activity;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -10,7 +9,6 @@ import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -19,34 +17,33 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.crewcloud.crewmain.CrewCloudApplication;
 import com.crewcloud.crewmain.R;
-import com.crewcloud.crewmain.datamodel.Login_v2_Result;
-import com.crewcloud.crewmain.module.device.DevicePresenter;
-import com.crewcloud.crewmain.module.device.DevicePresenterImp;
+import com.crewcloud.crewmain.callbacks.LoginCallBack;
+import com.crewcloud.crewmain.datamodel.ErrorDto;
+import com.crewcloud.crewmain.datamodel.LoginDto;
+import com.crewcloud.crewmain.util.Constants;
+import com.crewcloud.crewmain.util.ICheckSSL;
 import com.crewcloud.crewmain.util.PreferenceUtilities;
 import com.crewcloud.crewmain.util.SoftKeyboardDetectorView;
-import com.crewcloud.crewmain.util.Statics;
 import com.crewcloud.crewmain.util.Util;
 import com.crewcloud.crewmain.util.WebClient;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.gson.Gson;
 
-import java.io.IOException;
+import org.json.JSONObject;
 
 import me.leolin.shortcutbadger.ShortcutBadger;
 
 
 public class LoginActivity extends BaseActivity {
-    private ImageView img_login_logo;
-    private TextView tv_login_logo_text;
-    private EditText login_edt_server, login_edt_username, login_edt_password;
-    private RelativeLayout login_btn_login;
+    private ImageView imgLoginLogo;
+    private TextView tvLoginLogoText;
+    private EditText etDomain, etUsername, etPassword;
+    private RelativeLayout btnLogin;
     public PreferenceUtilities mPrefs;
     private boolean mFirstLogin = true;
     private String mInputUsername, mInputPassword;
@@ -65,13 +62,13 @@ public class LoginActivity extends BaseActivity {
         softKeyboardDetectorView.setOnShownKeyboard(new SoftKeyboardDetectorView.OnShownKeyboardListener() {
             @Override
             public void onShowSoftKeyboard() {
-                if (img_login_logo != null) {
-                    img_login_logo.setVisibility(View.GONE);
+                if (imgLoginLogo != null) {
+                    imgLoginLogo.setVisibility(View.GONE);
 
-                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) tv_login_logo_text.getLayoutParams();
+                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) tvLoginLogoText.getLayoutParams();
                     params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-                    tv_login_logo_text.setLayoutParams(params);
-                    tv_login_logo_text.setText(Util.getString(R.string.app_name));
+                    tvLoginLogoText.setLayoutParams(params);
+                    tvLoginLogoText.setText(Util.getString(R.string.app_name));
                 }
             }
         });
@@ -79,13 +76,13 @@ public class LoginActivity extends BaseActivity {
         softKeyboardDetectorView.setOnHiddenKeyboard(new SoftKeyboardDetectorView.OnHiddenKeyboardListener() {
             @Override
             public void onHiddenSoftKeyboard() {
-                if (img_login_logo != null) {
-                    img_login_logo.setVisibility(View.VISIBLE);
+                if (imgLoginLogo != null) {
+                    imgLoginLogo.setVisibility(View.VISIBLE);
 
-                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) tv_login_logo_text.getLayoutParams();
+                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) tvLoginLogoText.getLayoutParams();
                     params.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
-                    tv_login_logo_text.setLayoutParams(params);
-                    tv_login_logo_text.setText(Util.getString(R.string.app_name));
+                    tvLoginLogoText.setLayoutParams(params);
+                    tvLoginLogoText.setText(Util.getString(R.string.app_name));
                 }
             }
         });
@@ -101,21 +98,26 @@ public class LoginActivity extends BaseActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        img_login_logo = (ImageView) findViewById(R.id.img_login_logo);
-        tv_login_logo_text = (TextView) findViewById(R.id.tv_login_logo_text);
-        login_edt_username = (EditText) findViewById(R.id.login_edt_username);
-        login_edt_password = (EditText) findViewById(R.id.login_edt_password);
-        login_edt_server = (EditText) findViewById(R.id.login_edt_server);
+        imgLoginLogo = (ImageView) findViewById(R.id.img_login_logo);
+        tvLoginLogoText = (TextView) findViewById(R.id.tv_login_logo_text);
+        etUsername = (EditText) findViewById(R.id.login_edt_username);
+        etPassword = (EditText) findViewById(R.id.login_edt_password);
+        etDomain = (EditText) findViewById(R.id.login_edt_server);
 
-        login_edt_username.setPrivateImeOptions("defaultInputmode=english;");
-        login_edt_server.setPrivateImeOptions("defaultInputmode=english;");
+        etUsername.setPrivateImeOptions("defaultInputmode=english;");
+        etDomain.setPrivateImeOptions("defaultInputmode=english;");
 
         PreferenceUtilities preferenceUtilities = CrewCloudApplication.getInstance().getPreferenceUtilities();
-        login_edt_password.setText(preferenceUtilities.getPass());
-        login_edt_server.setText(preferenceUtilities.getDomain());
-        login_edt_username.setText(preferenceUtilities.getUserId());
+        /** Check save old domain*/
+        if (!preferenceUtilities.getStringValue("domain", "").isEmpty()) {
+            preferenceUtilities.putStringValue(Constants.COMPANY_NAME, preferenceUtilities.getStringValue("domain", ""));
+        }
 
-        login_edt_username.addTextChangedListener(new TextWatcher() {
+        etPassword.setText(preferenceUtilities.getPass());
+        etDomain.setText(preferenceUtilities.getStringValue(Constants.COMPANY_NAME, ""));
+        etUsername.setText(preferenceUtilities.getUserId());
+
+        etUsername.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -128,13 +130,13 @@ public class LoginActivity extends BaseActivity {
             public void afterTextChanged(Editable s) {
                 String result = s.toString().replaceAll(" ", "");
                 if (!s.toString().equals(result)) {
-                    login_edt_username.setText(result);
-                    login_edt_username.setSelection(result.length());
+                    etUsername.setText(result);
+                    etUsername.setSelection(result.length());
                 }
             }
         });
 
-        login_edt_server.addTextChangedListener(new TextWatcher() {
+        etDomain.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -148,61 +150,51 @@ public class LoginActivity extends BaseActivity {
                 String result = s.toString().replaceAll(" ", "");
 
                 if (!s.toString().equals(result)) {
-                    login_edt_server.setText(result);
-                    login_edt_server.setSelection(result.length());
+                    etDomain.setText(result);
+                    etDomain.setSelection(result.length());
                 }
             }
         });
 
-        login_edt_password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        etPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    login_btn_login.callOnClick();
+                    btnLogin.callOnClick();
                 }
 
                 return false;
             }
         });
 
-        login_btn_login = (RelativeLayout) findViewById(R.id.login_btn_login);
+        btnLogin = (RelativeLayout) findViewById(R.id.login_btn_login);
 
-        if (login_btn_login != null) {
-            login_btn_login.setOnClickListener(new View.OnClickListener() {
+        if (btnLogin != null) {
+            btnLogin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mInputUsername = login_edt_username.getText().toString();
-                    mInputPassword = login_edt_password.getText().toString();
-                    server_site = login_edt_server.getText().toString();
+                    mInputUsername = etUsername.getText().toString();
+                    mInputPassword = etPassword.getText().toString();
+                    final String domain = etDomain.getText().toString();
 
-                    if (TextUtils.isEmpty(checkStringValue(server_site, mInputUsername, mInputPassword))) {
-                        server_site = getServerSite(server_site);
-                        String company_domain = server_site;
-
-                        if (!company_domain.startsWith("http")) {
-                            server_site = "http://" + server_site;
-                        }
-
-                        String temp_server_site = server_site;
-
-                        if (temp_server_site.contains(".bizsw.co.kr")) {
-                            temp_server_site = "http://www.bizsw.co.kr:8080";
-                        } else {
-                            if (temp_server_site.contains("crewcloud")) {
-                                temp_server_site = "http://www.crewcloud.net";
+                    Util.setServerSite(domain);
+                    if (TextUtils.isEmpty(checkStringValue(domain, mInputUsername, mInputPassword))) {
+                        showProgressDialog();
+                        WebClient.checkSSL(new ICheckSSL() {
+                            @Override
+                            public void hasSSL(boolean hasSSL) {
+                                Util.setServerSite(domain);
+                                new WebClientAsync_Login_v2().execute();
                             }
-                        }
 
-//                        showProgressDialog();
-
-                        PreferenceUtilities preferenceUtilities = CrewCloudApplication.getInstance().getPreferenceUtilities();
-
-                        preferenceUtilities.setCurrentServiceDomain(temp_server_site); // Domain
-                        preferenceUtilities.setCurrentCompanyDomain(company_domain); // group ID
-
-                        new WebClientAsync_Login_v2(company_domain, temp_server_site).execute();
+                            @Override
+                            public void checkSSLError(ErrorDto errorData) {
+                                dismissProgressDialog();
+                                Toast.makeText(LoginActivity.this, "Cannot check ssl this domain!", Toast.LENGTH_LONG).show();
+                            }
+                        });
                     } else {
-                        displayAddAlertDialog(getString(R.string.app_name), checkStringValue(server_site, mInputUsername, mInputPassword), getString(R.string.string_ok), null,
+                        displayAddAlertDialog(getString(R.string.app_name), checkStringValue(domain, mInputUsername, mInputPassword), getString(R.string.string_ok), null,
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
@@ -244,30 +236,13 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-    private String getServerSite(String server_site) {
-        String[] domains = server_site.split("[.]");
-        if (server_site.contains(".bizsw.co.kr") && !server_site.contains("8080")) {
-            return server_site.replace(".bizsw.co.kr", ".bizsw.co.kr:8080");
-        }
-
-        if (domains.length == 1) {
-            return domains[0] + ".crewcloud.net";
-        } else {
-            return server_site;
-        }
-    }
-
-
     private class WebClientAsync_Login_v2 extends AsyncTask<Void, Void, Void> {
-        private String mCompanyDomain, mTempServerSite;
         private boolean mIsSuccess, mIsFailed;
 
         private boolean mIsLogin = true;
         private String mErrorMessage;
 
-        private WebClientAsync_Login_v2(String companyDomain, String tempServerSite) {
-            mCompanyDomain = companyDomain;
-            mTempServerSite = tempServerSite;
+        private WebClientAsync_Login_v2() {
         }
 
         @Override
@@ -278,46 +253,32 @@ public class LoginActivity extends BaseActivity {
 
         @Override
         protected Void doInBackground(Void... params) {
-            WebClient.Login_v2(Util.getPhoneLanguage(), Util.getTimeOffsetInMinute(), mCompanyDomain,
-                    mInputUsername, mInputPassword, "Android " + android.os.Build.VERSION.RELEASE, mTempServerSite, new WebClient.OnWebClientListener() {
+            WebClient.Login_v2(Util.getPhoneLanguage(), Util.getTimeOffsetInMinute(),
+                    mInputUsername, mInputPassword, "Android " + android.os.Build.VERSION.RELEASE, new LoginCallBack() {
                         @Override
-                        public void onSuccess(JsonNode jsonNode) {
+                        public void onLoginSuccess(String response) {
                             mIsSuccess = true;
                             mIsFailed = false;
 
                             try {
-                                if (jsonNode.get("success").asInt() == 0) {
-                                    mIsLogin = false;
-                                    mErrorMessage = jsonNode.get("error").get("message").asText();
-                                } else {
-                                    ObjectMapper mapper = new ObjectMapper();
-                                    String dataJson = jsonNode.get("data").toString();
+                                JSONObject json = new JSONObject(response);
+                                JSONObject jsonD = new JSONObject(json.getString("d"));
 
-                                    Login_v2_Result result = mapper.readValue(dataJson, new TypeReference<Login_v2_Result>() {
-                                    });
-                                    result.prefs.putUserData(dataJson);
+                                if (Integer.parseInt(jsonD.getString("success")) == 0) {
+                                    mIsLogin = false;
+                                    //mErrorMessage = jsonD.get("error").get("message").asText();
+                                } else {
+                                    Gson gson = new Gson();
+                                    LoginDto result = gson.fromJson(jsonD.getString("data"), LoginDto.class);
+
+                                    result.prefs.putUserData(jsonD.getString("data"));
                                     result.prefs.setCurrentMobileSessionId(result.session);
-                                    result.prefs.setCurrentUserIsAdmin(result.PermissionType);
                                     result.prefs.setCurrentCompanyNo(result.CompanyNo);
                                     result.prefs.setCurrentUserNo(result.Id);
                                     result.prefs.setCurrentUserID(result.userID);
                                     result.prefs.setAvatar(result.avatar);
-                                    result.prefs.setEmail(result.MailAddress);
                                     result.prefs.setUserId(result.userID);
-                                    result.prefs.setFullName(result.FullName);
-                                    result.prefs.setCurrentCompanyName(result.NameCompany);
                                     result.prefs.setPass(mInputPassword);
-                                    result.prefs.setDomain(mCompanyDomain);
-                                    result.prefs.setCellPhone(result.CellPhone);
-                                    result.prefs.setCompanyPhone(result.CompanyPhone);
-                                    result.prefs.setBirthday(result.BirthDate);
-                                    result.prefs.setEntranceDate(result.EntranceDate);
-
-                                    CrewCloudApplication.getInstance().getPreferenceUtilities().setCurrentCompanyName(result.NameCompany);
-
-                                    if (!TextUtils.isEmpty(server_site)) {
-                                        CrewCloudApplication.getInstance().getPreferenceUtilities().setCurrentServiceDomain(server_site);
-                                    }
                                 }
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -328,7 +289,7 @@ public class LoginActivity extends BaseActivity {
                         }
 
                         @Override
-                        public void onFailure() {
+                        public void onLoginFail() {
                             mIsSuccess = false;
                             mIsFailed = true;
                             mIsLogin = false;

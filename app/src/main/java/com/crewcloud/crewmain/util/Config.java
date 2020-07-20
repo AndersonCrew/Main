@@ -6,6 +6,6 @@ package com.crewcloud.crewmain.util;
  */
 
 public class Config {
-    public static final int NOTIFICATION_ID = 100;
+    public final static String URL_CHECK_SSL = "http://mobileupdate.crewcloud.net/WebServiceMobile.asmx/SSL_Check";
     public static final int NOTIFICATION_ID_BIG_IMAGE = 101;
 }

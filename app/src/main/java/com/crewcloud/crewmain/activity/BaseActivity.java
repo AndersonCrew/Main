@@ -26,7 +26,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected Context mContext;
     public static BaseActivity Instance;
     private Dialog mProgressDialog;
-    protected String server_site;
     private boolean mIsExit;
 
     @Override
@@ -38,7 +37,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         enableHomeAction();
-        server_site = "http://google.com";
     }
     @Override
     public void onBackPressed() {

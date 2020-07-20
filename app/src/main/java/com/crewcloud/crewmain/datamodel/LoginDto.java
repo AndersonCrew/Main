@@ -7,28 +7,19 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Login_v2_Result {
-    public String SessionID;
-    public String Domain;
-
+public class LoginDto {
     public String userID;
     public String FullName;
     public int Id;
     public String session;
     public String avatar;
-    public String Password;
-    public int PermissionType;
     public String NameCompany;
     public String MailAddress;
     public int CompanyNo;
-    public String EntranceDate;
-    public String BirthDate;
-    public String CellPhone;
-    public String CompanyPhone;
 
     public PreferenceUtilities prefs = CrewCloudApplication.getInstance().getPreferenceUtilities();
 
-    public Login_v2_Result() {
+    public LoginDto() {
         prefs = CrewCloudApplication.getInstance().getPreferenceUtilities();
     }
 }

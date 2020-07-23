@@ -27,6 +27,7 @@ import com.crewcloud.crewmain.Constants;
 import com.crewcloud.crewmain.CrewCloudApplication;
 import com.crewcloud.crewmain.util.DeviceUtilities;
 import com.crewcloud.crewmain.util.PreferenceUtilities;
+import com.crewcloud.crewmain.util.Util;
 import com.crewcloud.crewmain.util.WebClient;
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -41,6 +42,8 @@ import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import static com.crewcloud.crewmain.util.Util.compareVersionNames;
+
 public class IntroActivity extends AppCompatActivity {
 
     @Override
@@ -49,7 +52,7 @@ public class IntroActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         setContentView(R.layout.activity_intro);
 
-
+        checkLogout();
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.myColor_PrimaryDark));
         }
@@ -58,6 +61,19 @@ public class IntroActivity extends AppCompatActivity {
             startApplication();
         } else {
             setPermissions();
+        }
+    }
+
+    private void checkLogout() {
+        if (compareVersionNames(BuildConfig.VERSION_NAME, "1.4.1") <= 0 && !CrewCloudApplication.getInstance().getPreferenceUtilities().getBooleanValue(Constants.HAS_CLEAR_DATA_CHECK_SSL, false)) {
+            CrewCloudApplication.getInstance().getPreferenceUtilities().putBooleanValue(Constants.HAS_CLEAR_DATA_CHECK_SSL, true);
+            PreferenceUtilities preferenceUtilities = CrewCloudApplication.getInstance().getPreferenceUtilities();
+            preferenceUtilities.setCurrentMobileSessionId("");
+            preferenceUtilities.setCurrentCompanyNo(0);
+            preferenceUtilities.clearLogin();
+            if (!CrewCloudApplication.getInstance().getPreferenceUtilities().getStringValue("domain", "").isEmpty()) {
+                Util.setServerSite(CrewCloudApplication.getInstance().getPreferenceUtilities().getStringValue("domain", ""));
+            }
         }
     }
 

@@ -7,7 +7,7 @@
 
     <!-- IntroActivity -->
     <string name="introActivity_message_permission_denied">권한 사용에 동의하시지 않으면 앱을 사용하실 수 없습니다.</string>
-    <string name="string_update_content">Tồn tại phiên bản mới. Bạn có muốn cập nhật phiên bản mới?</string>
+    <string name="string_update_content">Vui lòng cập nhật phiên bản mới nhất!</string>
 
     <!-- LoginActivity -->
 

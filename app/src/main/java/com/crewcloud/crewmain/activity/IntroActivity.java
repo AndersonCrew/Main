@@ -65,15 +65,14 @@ public class IntroActivity extends AppCompatActivity {
     }
 
     private void checkLogout() {
-        if (compareVersionNames(BuildConfig.VERSION_NAME, "1.4.1") <= 0 && !CrewCloudApplication.getInstance().getPreferenceUtilities().getBooleanValue(Constants.HAS_CLEAR_DATA_CHECK_SSL, false)) {
-            CrewCloudApplication.getInstance().getPreferenceUtilities().putBooleanValue(Constants.HAS_CLEAR_DATA_CHECK_SSL, true);
-            PreferenceUtilities preferenceUtilities = CrewCloudApplication.getInstance().getPreferenceUtilities();
-            preferenceUtilities.setCurrentMobileSessionId("");
-            preferenceUtilities.setCurrentCompanyNo(0);
-            preferenceUtilities.clearLogin();
-            if (!CrewCloudApplication.getInstance().getPreferenceUtilities().getStringValue("domain", "").isEmpty()) {
-                Util.setServerSite(CrewCloudApplication.getInstance().getPreferenceUtilities().getStringValue("domain", ""));
-            }
+        //Clear login if oldversion <= 1.4.0
+        CrewCloudApplication.getInstance().getPreferenceUtilities().putBooleanValue(Constants.HAS_CLEAR_DATA_CHECK_SSL, true);
+        PreferenceUtilities preferenceUtilities = CrewCloudApplication.getInstance().getPreferenceUtilities();
+        preferenceUtilities.setCurrentMobileSessionId("");
+        preferenceUtilities.setCurrentCompanyNo(0);
+        preferenceUtilities.clearLogin();
+        if (!CrewCloudApplication.getInstance().getPreferenceUtilities().getStringValue("domain", "").isEmpty()) {
+            Util.setServerSite(CrewCloudApplication.getInstance().getPreferenceUtilities().getStringValue("domain", ""));
         }
     }
 

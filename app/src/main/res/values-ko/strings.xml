@@ -7,7 +7,7 @@
 
     <!-- IntroActivity -->
     <string name="introActivity_message_permission_denied">권한 사용에 동의하시지 않으면 앱을 사용하실 수 없습니다.</string>
-    <string name="string_update_content">새로운 버전이 존재합니다. 설치하시겠습니까? </string>
+    <string name="string_update_content">최신버전이 존재합니다. 최신버전으로 업데이트 하시길 바랍니다</string>
 
     <!-- LoginActivity -->
 

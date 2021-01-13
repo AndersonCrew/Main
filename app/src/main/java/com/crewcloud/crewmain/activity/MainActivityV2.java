@@ -272,12 +272,6 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
                         }
                     });
 
-                    builder.setNegativeButton(R.string.login_button_no, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
                     try {
                         AlertDialog dialog = builder.create();
                         dialog.setCancelable(false);
@@ -623,7 +617,7 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
             PreferenceUtilities preferenceUtilities = CrewCloudApplication.getInstance().getPreferenceUtilities();
 
             WebClient.GetEnabledApplications(DeviceUtilities.getLanguageCode(), DeviceUtilities.getTimeZoneOffset(), preferenceUtilities.getCurrentMobileSessionId(),
-                   preferenceUtilities.getDomain(), new WebClient.OnWebClientListener() {
+                    preferenceUtilities.getDomain(), new WebClient.OnWebClientListener() {
                         @Override
                         public void onSuccess(JsonNode jsonNode) {
                             mIsFailed = false;
@@ -676,17 +670,17 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             try {
-            if (!TextUtils.isEmpty(application.totalUnreadCount)) {
-                ShortcutBadger.applyCount(getApplicationContext(), Integer.parseInt(application.totalUnreadCount));
-            }
-            List<Application> lstApp = new ArrayList<>();
-            for (Application app : mListOfApplications) {
-                if (!TextUtils.isEmpty(app.PackageName)) {
-                    lstApp.add(app);
+                if (!TextUtils.isEmpty(application.totalUnreadCount)) {
+                    ShortcutBadger.applyCount(getApplicationContext(), Integer.parseInt(application.totalUnreadCount));
                 }
+                List<Application> lstApp = new ArrayList<>();
+                for (Application app : mListOfApplications) {
+                    if (!TextUtils.isEmpty(app.PackageName)) {
+                        lstApp.add(app);
+                    }
 
-            }
-            adapter.addAll(lstApp);
+                }
+                adapter.addAll(lstApp);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1084,7 +1078,7 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
                                 Intent intent = new Intent(Intent.ACTION_VIEW);
                                 intent.setData(Uri.parse("market://details?id=" + "com.dazone.crewdday"));
                                 startActivity(intent);
-                            }else {
+                            } else {
                                 final String finalApkFileName = apkFileName;
                                 new WebClientAsync_download(finalApkFileName).execute();
                             }
@@ -1100,7 +1094,6 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
                         } else {
                             final String finalApkFileName = apkFileName;
                             new WebClientAsync_download(finalApkFileName).execute();
-
                         }
 
                     }
@@ -1110,7 +1103,6 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
             }
 
         } else {
-
             startActivity(intent);
         }
     }

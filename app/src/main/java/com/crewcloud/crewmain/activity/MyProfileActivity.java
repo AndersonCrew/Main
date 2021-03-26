@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.crewcloud.crewmain.R;
@@ -67,6 +69,10 @@ public class MyProfileActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_profile_activity);
+
+        rlDateJoin = (RelativeLayout) findViewById(R.id.rlDateJoin);
+        rlBirthday = (RelativeLayout) findViewById(R.id.rlBirthday);
+
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.myColor_PrimaryDark));
         }
@@ -126,8 +132,7 @@ public class MyProfileActivity extends BaseActivity {
         tvPersionId.setText(preferenceUtilities.getUserId());
         tvPhone.setText(userDetailDto.getCellPhone());
         tvCompanyPhone.setText(userDetailDto.getCompanyPhone());
-        tvEntranceDate.setText(Util.displayTimeWithoutOffset(userDetailDto.getEntranceDate()));
-        tvBirthday.setText(Util.displayTimeWithoutOffset(userDetailDto.getBirthDate()));
+
         String strPositionName = "";
         String belongToDepartment = "";
         ArrayList<BelongDepartmentDTO> listBelong = userDetailDto.getBelongs();
@@ -145,7 +150,31 @@ public class MyProfileActivity extends BaseActivity {
             Picasso.with(this).load(CrewCloudApplication.getInstance().getPreferenceUtilities().getCurrentServiceDomain() + avatar)
                     .placeholder(R.mipmap.avatar_default).into(ivAvatar);
         }
+
+        String birthDay = Util.displayTimeWithoutOffset(userDetailDto.getBirthDate());
+        int yearBirthDay = Integer.parseInt(Util.formatYear(userDetailDto.getBirthDate()));
+
+        String joinDate = Util.displayTimeWithoutOffset(userDetailDto.getEntranceDate());
+        int yearDateJoin = Integer.parseInt(Util.formatYear(userDetailDto.getEntranceDate()));
+
+        if(yearBirthDay <= 1900) {
+            rlBirthday.setVisibility(View.GONE);
+        } else {
+            rlBirthday.setVisibility(View.VISIBLE);
+            tvBirthday.setText(birthDay);
+        }
+
+        if(yearDateJoin <= 1900) {
+            rlDateJoin.setVisibility(View.GONE);
+        } else {
+            rlDateJoin.setVisibility(View.VISIBLE);
+            tvEntranceDate.setText(joinDate);
+        }
+
+
     }
+
+    private RelativeLayout rlDateJoin, rlBirthday;
 
     @Override
 

@@ -320,6 +320,7 @@
             <include layout="@layout/layout_view_line" />
 
             <RelativeLayout
+                android:id="@+id/rlDateJoin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/margin_normal">
@@ -343,6 +344,7 @@
             <include layout="@layout/layout_view_line" />
 
             <RelativeLayout
+                android:id="@+id/rlBirthday"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/margin_normal">

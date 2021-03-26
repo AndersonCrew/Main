@@ -43,6 +43,21 @@ public class Util {
         }
     }
 
+    public static String formatYear(String birthDate) {
+        String result = "";
+        try {
+            String timeString;
+            timeString = birthDate.substring(birthDate.indexOf('(') + 1, birthDate.indexOf('+'));
+            Date date = new Date(Long.parseLong(timeString));
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy");
+            result = simpleDateFormat.format(date);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
     public static long getTime(String timeString) {
         try {
             long time;
@@ -227,12 +242,11 @@ public class Util {
             domain = domains[0] + ".crewcloud.net";
         }
 
-        if(domain.startsWith("http://")){
-            domain = domain.replace("http://", "");
-        }
-
-        if(domain.startsWith("https://")) {
-            domain = domain.replace("https://", "");
+        if(domain.startsWith("http://") || domain.startsWith("https://")){
+            CrewCloudApplication.getInstance().getPreferenceUtilities().putStringValue(Constants.DOMAIN, domain);
+            String companyName = domain.startsWith("http://") ? domain.replace("http://", ""): domain.startsWith("https://") ? domain.replace("https://", ""): domain;
+            CrewCloudApplication.getInstance().getPreferenceUtilities().putStringValue(Constants.COMPANY_NAME, companyName);
+            return domain;
         }
 
         String head = CrewCloudApplication.getInstance().getPreferenceUtilities().getBooleanValue(Constants.HAS_SSL, false) ? "https://" : "http://";

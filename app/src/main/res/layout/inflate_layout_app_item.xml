@@ -8,14 +8,13 @@
 
     <RelativeLayout
         android:id="@+id/badge3"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content">
+        android:layout_width="68dp"
+        android:layout_height="68dp">
 
         <ImageView
             android:id="@+id/iv_inflate_layout_app_item_icon"
-            android:layout_width="68dp"
-            android:layout_marginTop="5dp"
-            android:layout_height="68dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:scaleType="fitXY" />
 
         <TextView
@@ -36,10 +35,10 @@
 
     <TextView
         android:id="@+id/tv_inflate_layout_app_item_name"
-        android:layout_width="68dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:gravity="center_horizontal"
+        android:gravity="center"
         android:singleLine="true"
         android:textColor="#555555"
         android:textSize="15sp" />

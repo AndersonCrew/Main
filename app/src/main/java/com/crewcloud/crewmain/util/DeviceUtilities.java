@@ -13,12 +13,15 @@ public class DeviceUtilities {
         Context context = CrewCloudApplication.getInstance().getBaseContext();
         Locale locale = context.getResources().getConfiguration().locale;
         String language = locale.getLanguage();
-
         switch (language) {
             case "ko":
                 return "KO";
             case "vi":
                 return "VN";
+            case "zh":
+                return "CH";
+            case "ja":
+                return "JP";
             default:
                 return "EN";
         }

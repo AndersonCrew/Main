@@ -569,7 +569,7 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
         rv_unread_mail.setAdapter(unreadMailAdapter);
 
 
-        adapter.setOnClickLitener(new ApplicationAdapter.onClickItemListener() {
+        adapter.setOnClickListener(new ApplicationAdapter.onClickItemListener() {
             @Override
             public void onClickItem(final Application application) {
                 otherApp(application);
@@ -673,13 +673,22 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
                 if (!TextUtils.isEmpty(application.totalUnreadCount)) {
                     ShortcutBadger.applyCount(getApplicationContext(), Integer.parseInt(application.totalUnreadCount));
                 }
+
                 List<Application> lstApp = new ArrayList<>();
                 for (Application app : mListOfApplications) {
                     if (!TextUtils.isEmpty(app.PackageName)) {
                         lstApp.add(app);
                     }
-
                 }
+
+                if (CrewCloudApplication.getInstance().getPreferenceUtilities().getStringValue(Constants.COMPANY_NAME, "").equals(Constants.CHECK_DOMAIN_BODITECH)) {
+                    Application coffee = new Application();
+                    coffee.setProjectCode(Constants.PROJECT_CODE_COFFEE);
+                    coffee.setPackageName(Constants.URL_COFFEE);
+                    coffee.setApplicationName(getResources().getString(R.string.boditech));
+                    lstApp.add(coffee);
+                }
+
                 adapter.addAll(lstApp);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -1021,6 +1030,11 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
                 browserIntent.putExtra("AAA", application.getPackageName());
                 startActivity(browserIntent);
             } else {
+                if(application.ProjectCode.equals(Constants.PROJECT_CODE_COFFEE)) {
+                    startActivity(new Intent(MainActivityV2.this, BoditechCoffeeActivity.class));
+                    return;
+                }
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivityV2.this);
                 builder.setMessage(getString(R.string.mailActivity_message_install_apk, application.ApplicationName));
                 builder.setNegativeButton(R.string.common_alert_dialog_no, null);
@@ -1057,6 +1071,9 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
                                 break;
                             case "WorkingTime":
                                 apkFileName = "CrewTimeCard";
+                                break;
+                            case Constants.PROJECT_CODE_COFFEE:
+                                apkFileName = Constants.PROJECT_CODE_COFFEE;
                                 break;
                         }
 

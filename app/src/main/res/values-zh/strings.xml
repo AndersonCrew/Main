@@ -1,0 +1,75 @@
+<resources>
+    <string name="app_name">船員工場</string> <!-- 크루웍스 -->
+
+    <string name ="common_alert_dialog_install">安裝</string>
+    <string name ="common_alert_dialog_no">否</string>
+
+    <string name ="introActivity_message_permission_denied">如果您不同意使用許可，則不能使用該應用程序。</string>
+    <string name ="string_update_content">存在較新的版本。請更新到最新版本</string>
+
+
+    <string name ="loginActivity_message_wrong_server_site">無法連接到服務器。</string>
+
+
+    <string name ="navigation_drawer_open"> navigation_drawer_open </string>
+    <string name ="navigation_drawer_close"> navigation_drawer_close </string>
+    <string name ="start_sep_title_mobileService">移動服務</string>
+    <string name ="start_sep_title_approval">電子支付</string>
+    <string name ="start_sep_title_email">未讀郵件</string>
+    <string name ="start_sep_title_schedule">今天的日程表</string>
+    <string name ="start_sep_title_notice">通知</string>
+    <string name ="mainActivity_message_exit">再次單擊\'返回\'按鈕以完成操作。</string>
+    <string name ="mailActivity_message_download_apk">正在下載安裝文件。\ n請稍候。</string>
+    <string name ="mailActivity_message_install_apk">尚未安裝％s應用。\ n您要立即安裝嗎？</string>
+
+
+    <string name ="loading_content">請稍候。</string>
+    <string name ="string_ok">確定</string>
+    <string name ="app_name_crewchat">密碼聊天</string>
+
+    <string name ="sign_up_suggest">還沒有組織（公司）ID？</string>
+    <string name ="string_sign_up">創建新的組織（公司）</string>
+    <string name ="login_password">密碼</string>
+    <string name ="login_username">個人ID </string>
+    <string name ="string_server_site">組織（公司）ID </string>
+    <string name ="login_login">登錄</string>
+
+    <string name ="login_button_yes">確定</string>
+    <string name ="login_button_no">取消</string>
+    <string name ="connection_falsed">無法連接上述地址</string>
+    <string name ="login_empty_input">不能為空</string>
+    <string name ="are_you_sure_loguot">確定要註銷嗎？</string>
+    <string name ="auto_login_button_yes">是</string>
+    <string name ="auto_login_button_no">否</string>
+
+    <string name ="about">信息</string>
+    <string name ="user_version">用戶版本</string>
+    <string name ="lastest_version">最新版本</string>
+    <string name ="confirm">確認</string>
+    <string name ="no_network_error">無法連接到服務器。</string>
+    <string name ="file_not_found_error">找不到文件</string>
+    <string name ="can_not_check_version">無法在服務器上檢查版本</string>
+    <string name ="setting_notification_from_time">上午08:00 </string>
+    <string name ="setting_notification_to_time">下午19:00 </string>
+    <string name ="approval">電子支付</string>
+    <string name ="crewmail"> Crewmail </string>
+    <string name ="schedule">計劃管理</string>
+    <string name ="d_day"> D日</string>
+    <string name ="community">社區</string>
+    <string name ="notice">通知</string>
+    <string name ="contact">通訊錄</string>
+    <string name ="crewchat">密碼聊天</string>
+    <string name ="time_card">出勤率</string>
+    <string name ="login_password_change">更改密碼</string>
+    <string name ="email">電子郵件</string>
+    <string name ="cell_phone">手機</string>
+    <string name ="company_phone">公司聯繫人</string>
+    <string name ="emloy_date">僱用日期</string>
+    <string name ="date_of_birth">生日</string>
+    <string name ="about_crewworks">作品信息</string>
+    <string name ="log_out">註銷</string>
+    <string name ="my_profile">我的信息</string>
+    <string name ="setings">設置</string>
+    <string name="boditech">botitech</string>
+
+</resources>

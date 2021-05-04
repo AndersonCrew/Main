@@ -17,6 +17,7 @@ import android.util.Log;
 
 import com.crewcloud.crewmain.R;
 import com.crewcloud.crewmain.activity.MainActivity;
+import com.crewcloud.crewmain.activity.MainActivityV2;
 import com.crewcloud.crewmain.datamodel.GCMData;
 import com.crewcloud.crewmain.datamodel.NotificationBundleDto;
 import com.crewcloud.crewmain.util.PreferenceUtilities;
@@ -102,7 +103,7 @@ public class GcmIntentService extends IntentService {
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         /** PendingIntent */
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, MainActivityV2.class);
         intent.putExtra(StaticsBundle.BUNDLE_MAIL_NO, mailNo);
         intent.putExtra(StaticsBundle.BUNDLE_MAIL_FROM_NOTIFICATION, true);
         intent.putExtra(StaticsBundle.BUNDLE_MAIL_FROM_NOTIFICATION_MAILBOX_NO, mailBoxNo);

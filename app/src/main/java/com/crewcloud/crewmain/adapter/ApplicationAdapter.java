@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.crewcloud.crewmain.Constants;
 import com.crewcloud.crewmain.R;
 import com.crewcloud.crewmain.activity.BaseActivity;
 import com.crewcloud.crewmain.datamodel.Application;
@@ -33,9 +34,9 @@ public class ApplicationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     public void addAll(List<Application> comments) {
-        int curr = getItemCount();
+        lstApp.clear();
         lstApp.addAll(comments);
-        notifyItemRangeInserted(curr, getItemCount());
+        notifyDataSetChanged();
     }
 
     @Override
@@ -57,11 +58,6 @@ public class ApplicationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             return 0;
         }
         return lstApp.size();
-    }
-
-    public void clear() {
-        lstApp.clear();
-        notifyDataSetChanged();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -169,6 +165,12 @@ public class ApplicationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     break;
                 }
 
+                case Constants.PROJECT_CODE_COFFEE: {
+                    iv_inflate_layout_app_item_icon.setImageResource(R.drawable.icon_coffee);
+                    tv_inflate_layout_app_item_name.setText(R.string.boditech);
+                    break;
+                }
+
                 default: {
                     break;
                 }
@@ -183,8 +185,8 @@ public class ApplicationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private onClickItemListener listener;
 
-    public void setOnClickLitener(onClickItemListener litener) {
-        this.listener = litener;
+    public void setOnClickListener(onClickItemListener listener) {
+        this.listener = listener;
     }
 
 

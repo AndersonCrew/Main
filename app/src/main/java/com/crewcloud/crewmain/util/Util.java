@@ -229,7 +229,6 @@ public class Util {
         });
 
         dialog.show();
-
     }
 
     public static String setServerSite(String domain) {
@@ -243,10 +242,7 @@ public class Util {
         }
 
         if(domain.startsWith("http://") || domain.startsWith("https://")){
-            CrewCloudApplication.getInstance().getPreferenceUtilities().putStringValue(Constants.DOMAIN, domain);
-            String companyName = domain.startsWith("http://") ? domain.replace("http://", ""): domain.startsWith("https://") ? domain.replace("https://", ""): domain;
-            CrewCloudApplication.getInstance().getPreferenceUtilities().putStringValue(Constants.COMPANY_NAME, companyName);
-            return domain;
+            domain = domain.startsWith("http://") ? domain.replace("http://", ""): domain.startsWith("https://") ? domain.replace("https://", ""): domain;
         }
 
         String head = CrewCloudApplication.getInstance().getPreferenceUtilities().getBooleanValue(Constants.HAS_SSL, false) ? "https://" : "http://";
@@ -255,5 +251,4 @@ public class Util {
         CrewCloudApplication.getInstance().getPreferenceUtilities().putStringValue(Constants.COMPANY_NAME, domain);
         return domainCompany;
     }
-
 }

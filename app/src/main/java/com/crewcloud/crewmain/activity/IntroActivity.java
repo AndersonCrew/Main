@@ -66,11 +66,15 @@ public class IntroActivity extends AppCompatActivity {
 
     private void checkLogout() {
         //Clear login if oldversion <= 1.4.0
-        CrewCloudApplication.getInstance().getPreferenceUtilities().putBooleanValue(Constants.HAS_CLEAR_DATA_CHECK_SSL, true);
-        PreferenceUtilities preferenceUtilities = CrewCloudApplication.getInstance().getPreferenceUtilities();
-        preferenceUtilities.setCurrentMobileSessionId("");
-        preferenceUtilities.setCurrentCompanyNo(0);
-        preferenceUtilities.clearLogin();
+        String appVersion = BuildConfig.VERSION_NAME;
+        if (compareVersionNames(appVersion, "1.4.0") == -1) {
+            CrewCloudApplication.getInstance().getPreferenceUtilities().putBooleanValue(Constants.HAS_CLEAR_DATA_CHECK_SSL, true);
+            PreferenceUtilities preferenceUtilities = CrewCloudApplication.getInstance().getPreferenceUtilities();
+            preferenceUtilities.setCurrentMobileSessionId("");
+            preferenceUtilities.setCurrentCompanyNo(0);
+            preferenceUtilities.clearLogin();
+        }
+
         if (!CrewCloudApplication.getInstance().getPreferenceUtilities().getStringValue("domain", "").isEmpty()) {
             Util.setServerSite(CrewCloudApplication.getInstance().getPreferenceUtilities().getStringValue("domain", ""));
         }

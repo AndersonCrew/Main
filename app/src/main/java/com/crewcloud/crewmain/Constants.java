@@ -12,4 +12,9 @@ public class Constants {
     public static final String URL_CHANGE_PASS = "/UI/WebService/WebServiceCenter.asmx/UpdatePassword";
     public static final String URL_INSERT_DEVICE = "/UI/WebService/WebServiceCenter.asmx/InsertAndroidDevice";
     public static final String URL_DELETE_DEVICE = "/UI/WebService/WebServiceCenter.asmx/DeleteAndroidDevice";
+    public static final String COMPANY_NAME = "COMPANY_NAME";
+    public static final String CHECK_DOMAIN_BODITECH = "bgw.boditech.co.kr";
+    public static final String PROJECT_CODE_COFFEE = "COFFEE";
+    public static final String URL_COFFEE = "http://cafe.boditech.co.kr/auth/login";
+    public static final String USER_ID = "USER_ID";
 }

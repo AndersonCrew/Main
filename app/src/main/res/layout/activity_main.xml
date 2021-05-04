@@ -71,6 +71,7 @@
                     android:paddingLeft="5dp"
                     android:background="#FFFFFF" />
 
+                <!--Approval-->
                 <RelativeLayout
                     android:id="@+id/rl_approval_documents"
                     android:layout_width="wrap_content"
@@ -101,6 +102,7 @@
                     android:background="#FFFFFF"
                     android:visibility="gone" />
 
+                <!--Mail-->
                 <RelativeLayout
                     android:id="@+id/rl_unread_mails"
                     android:layout_width="match_parent"
@@ -131,6 +133,7 @@
                     android:background="#FFFFFF"
                     android:visibility="gone" />
 
+                <!--Schedule-->
                 <RelativeLayout
                     android:id="@+id/rl_schedule"
                     android:layout_width="wrap_content"
@@ -161,6 +164,7 @@
                     android:orientation="vertical"
                     android:visibility="gone" />
 
+                <!--Notice-->
                 <RelativeLayout
                     android:id="@+id/rl_notice"
                     android:layout_width="wrap_content"

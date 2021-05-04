@@ -1,0 +1,73 @@
+<resources>
+    <string name="app_name">クルーワークス</string> <!-- 크루웍스 -->
+
+    <string name = "common_alert_dialog_install">インストール</string>
+    <string name = "common_alert_dialog_no">いいえ</string>
+
+    <string name = "introActivity_message_permission_denied">権限の使用に同意しない場合は、アプリを使用することができません。</string>
+    <string name = "string_update_content">最新バージョンが存在します。最新バージョンにアップデートハシギルください</string>
+
+    <string name = "loginActivity_message_wrong_server_site">サーバーに接続できません。</string>
+
+    <string name = "navigation_drawer_open"> navigation_drawer_open </string>
+    <string name = "navigation_drawer_close"> navigation_drawer_close </string>
+    <string name = "start_sep_title_mobileService">モバイルサービス</string>
+    <string name = "start_sep_title_approval">電子決裁</string>
+    <string name = "start_sep_title_email">未読メール</string>
+    <string name = "start_sep_title_schedule">今日の予定</string>
+    <string name = "start_sep_title_notice">お知らせ</string>
+    <string name = "mainActivity_message_exit"> 戻る\'ボタンをもう一度押すと終了します。</string>
+    <string name = "mailActivity_message_download_apk">インストールファイルをダウンロード中です。\ nしばらくお待ちください。</string>
+    <string name = "mailActivity_message_install_apk">％sアプリがインストールされていません。\ n今すぐインストールしますか？</string>
+
+
+    <string name = "loading_content"> Please wait </string>
+    <string name = "string_ok"> OK </string>
+    <string name = "app_name_crewchat">クルーチャット</string>
+
+    <string name = "sign_up_suggest">団体（会社）をお持ちのまだお持ちでないですか？</string>
+    <string name = "string_sign_up">新団体（会社）の生成</string>
+    <string name = "login_password">パスワード</string>
+    <string name = "login_username">個人ID </string>
+    <string name = "string_server_site">団体（会社）名</string>
+    <string name = "login_login">ログイン</string>
+
+    <string name = "login_button_yes">確認</string>
+    <string name = "login_button_no">キャンセル</string>
+    <string name = "connection_falsed"> Can not connect the above address </string>
+    <string name = "login_empty_input"> can not be empty </string>
+    <string name = "are_you_sure_loguot">ログアウトしますか？</string>
+    <string name = "auto_login_button_yes">例</string>
+    <string name = "auto_login_button_no">いいえ</string>
+
+    <string name = "about">情報</string>
+    <string name = "user_version">ユーザーバージョン</string>
+    <string name = "lastest_version">最新版</string>
+    <string name = "confirm">確認</string>
+    <string name = "no_network_error">サーバーに接続できないしました。</string>
+    <string name = "file_not_found_error"> File Not Found </string>
+    <string name = "can_not_check_version"> Can not check the version on sever </string>
+    <string name = "setting_notification_from_time"> AM 08:00 </string>
+    <string name = "setting_notification_to_time"> PM 19:00 </string>
+    <string name = "approval">電子決裁</string>
+    <string name = "crewmail">クルーメール</string>
+    <string name = "schedule">スケジュール</string>
+    <string name = "d_day"> Dデイ</string>
+    <string name = "community">コミュニティ</string>
+    <string name = "notice">お知らせ</string>
+    <string name = "contact">アドレス帳</string>
+    <string name = "crewchat">クルーチャット</string>
+    <string name = "time_card">出勤簿</string>
+    <string name = "login_password_change">パスワードの変更</string>
+    <string name = "email">メール</string>
+    <string name = "cell_phone">携帯電話</string>
+    <string name = "company_phone">会社の連絡先</string>
+    <string name = "emloy_date">入社日</string>
+    <string name = "date_of_birth">誕生日</string>
+    <string name = "about_crewworks">クルーワークス情報</string>
+    <string name = "log_out">ログアウト</string>
+    <string name = "my_profile">私の情報</string>
+    <string name = "setings">設定</string>
+    <string name="boditech">botitech</string>
+
+</resources>

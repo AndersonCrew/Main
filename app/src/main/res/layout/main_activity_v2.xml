@@ -70,6 +70,7 @@
                     android:paddingLeft="5dp"
                     android:paddingTop="5dp" />
 
+                <!--Approval-->
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="match_parent"
@@ -90,7 +91,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-
+                <!--Mail-->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -110,6 +111,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
+                <!--Schedule-->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -130,6 +132,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
+                <!--Notice-->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

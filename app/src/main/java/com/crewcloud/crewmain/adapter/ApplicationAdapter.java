@@ -175,6 +175,12 @@ public class ApplicationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     break;
                 }
 
+                case Constants.PROJECT_CODE_PMS: {
+                    iv_inflate_layout_app_item_icon.setImageResource(R.drawable.pms);
+                    tv_inflate_layout_app_item_name.setText(R.string.pms);
+                    break;
+                }
+
                 default: {
                     break;
                 }

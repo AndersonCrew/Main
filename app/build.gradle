@@ -9,14 +9,14 @@ android {
         minSdkVersion 16
         targetSdkVersion 26
         versionCode 7
-        versionName "1.5.5"
+        versionName "1.5.6"
         multiDexEnabled true
 
     }
-
     dexOptions {
         javaMaxHeapSize "4g"
     }
+
 
     signingConfigs {
         one {
@@ -34,12 +34,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "boolean", "ENABLE_DEBUG", "false"
         }
-
         debug {
             debuggable true
             signingConfig signingConfigs.one
             buildConfigField "boolean", "ENABLE_DEBUG", "true"
         }
+
     }
 
     packagingOptions {

@@ -712,6 +712,12 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
                     coffee.setPackageName(Constants.URL_COFFEE);
                     coffee.setApplicationName(getResources().getString(R.string.boditech));
                     lstApp.add(coffee);
+
+                    Application pms = new Application();
+                    pms.setProjectCode(Constants.PROJECT_CODE_PMS);
+                    pms.setPackageName(Constants.URL_PMS);
+                    pms.setApplicationName(getResources().getString(R.string.boditech));
+                    lstApp.add(pms);
                 }
 
                 adapter.addAll(lstApp);
@@ -1148,8 +1154,10 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
                 browserIntent.putExtra("AAA", application.getPackageName());
                 startActivity(browserIntent);
             } else {
-                if(application.ProjectCode.equals(Constants.PROJECT_CODE_COFFEE)) {
-                    startActivity(new Intent(MainActivityV2.this, BoditechCoffeeActivity.class));
+                if(application.ProjectCode.equals(Constants.PROJECT_CODE_COFFEE) || application.ProjectCode.equals(Constants.PROJECT_CODE_PMS)) {
+                    Intent intentBoditech = new Intent(MainActivityV2.this, BoditechCoffeeActivity.class);
+                    intentBoditech.putExtra(Constants.TYPE_PROJECT_CODE_BODITECH, application.ProjectCode);
+                    startActivity(intentBoditech);
                     return;
                 }
 

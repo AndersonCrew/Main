@@ -15,7 +15,10 @@ public class Constants {
     public static final String COMPANY_NAME = "COMPANY_NAME";
     public static final String CHECK_DOMAIN_BODITECH = "bgw.boditech.co.kr";
     public static final String PROJECT_CODE_COFFEE = "COFFEE";
+    public static final String PROJECT_CODE_PMS = "PMS";
+    public static final String TYPE_PROJECT_CODE_BODITECH = "TYPE_PROJECT_CODE_BODITECH";
     public static final String URL_COFFEE = "http://cafe.boditech.co.kr/auth/login";
+    public static final String URL_PMS = "http://cafe.boditech.co.kr/auth/login";
     public static final String USER_ID = "USER_ID";
     public static final String PROJECT_CODE_MAIL = "Mail3";
     public static final String PROJECT_CODE_APPROVAL = "_EAPP";

@@ -78,6 +78,7 @@
     <string name="log_out">Đăng xuất</string>
     <string name="my_profile">Thông tin của tôi</string>
     <string name="setings">Settings</string>
+    <string name="pms">PMS</string>
     <string name="boditech">Thực đơn</string>
 
 </resources>

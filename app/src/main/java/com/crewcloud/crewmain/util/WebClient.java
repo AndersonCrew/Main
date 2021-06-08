@@ -38,6 +38,7 @@ public class WebClient {
     private static final String SERVICE_URL_GET_ENABLED_APPLICATIONS = "/UI/WebService/WebServiceCenter.asmx/GetEnabledApplications";
 
     private static final String MAIL_URL_GET_APPROVAL_LIST = "/UI/_EAPP/Widget/EAWebService.asmx/GetApprovalList";
+    private static final String MAIL_URL_GET_COMMUNITY_LIST = "/UI/MobileBoard/Handlers/MobileService.asmx/GetBoardContentList";
     private static final String MAIL_URL_GET_UNREAD_MAILS = "/UI/MobileMail3/MobileDataService.asmx/GetUnreadMails";
     private static final String MAIL_URL_GET_SCHEDULE_LIST = "/UI/MobileSchedule/MobileDataService.asmx/GetPeriodSchedules";
     private static final String MAIL_URL_GET_NOTICE_LIST = "/UI/MobileNotice/NoticeService.asmx/GetNotices";
@@ -257,6 +258,30 @@ public class WebClient {
         mapParams.put("countperlist", countPerList);
 
         String result = getJSONStringFromUrl(_domain + MAIL_URL_GET_APPROVAL_LIST, mapParams);
+
+        if (TextUtils.isEmpty(result)) {
+            listener.onFailure();
+        } else {
+            try {
+                listener.onSuccess(mJSONObjectMapper.readTree(result).get("d"));
+            } catch (Exception e) {
+                e.printStackTrace();
+                listener.onFailure();
+            }
+        }
+    }
+
+    public static void
+    GetCommunityList(String languageCode, String sessionId, String _domain, OnWebClientListener listener) {
+        Map<String, Object> mapParams = new HashMap<>();
+        mapParams.put("languageCode", languageCode);
+        mapParams.put("countPerPage", "10");
+        mapParams.put("sessionId", sessionId);
+        mapParams.put("curentPage", "1");
+        mapParams.put("boardNo", "0");
+        mapParams.put("filterType", "1");
+
+        String result = getJSONStringFromUrl(_domain + MAIL_URL_GET_COMMUNITY_LIST, mapParams);
 
         if (TextUtils.isEmpty(result)) {
             listener.onFailure();

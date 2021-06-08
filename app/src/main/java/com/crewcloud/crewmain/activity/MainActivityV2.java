@@ -42,6 +42,7 @@ import com.crewcloud.crewmain.adapter.ScheduleAdapter;
 import com.crewcloud.crewmain.adapter.UnreadMailAdapter;
 import com.crewcloud.crewmain.datamodel.Application;
 import com.crewcloud.crewmain.datamodel.ApprovalDocument;
+import com.crewcloud.crewmain.datamodel.Community;
 import com.crewcloud.crewmain.datamodel.LoginDto;
 import com.crewcloud.crewmain.datamodel.Mail;
 import com.crewcloud.crewmain.datamodel.NoticeDocument;
@@ -51,6 +52,7 @@ import com.crewcloud.crewmain.module.device.DevicePresenterImp;
 import com.crewcloud.crewmain.util.DeviceUtilities;
 import com.crewcloud.crewmain.util.PreferenceUtilities;
 import com.crewcloud.crewmain.util.Statics;
+import com.crewcloud.crewmain.util.Util;
 import com.crewcloud.crewmain.util.WebClient;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.android.gms.common.ConnectionResult;
@@ -70,6 +72,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -93,14 +96,32 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
     @Bind(R.id.rv_notice)
     RecyclerView rv_notice;
 
+    @Bind(R.id.tvNotice)
+    TextView tvNotice;
+
     @Bind(R.id.rv_approval)
     RecyclerView rv_approval;
+
+    @Bind(R.id.textViewApproval)
+    TextView tvApproval;
 
     @Bind(R.id.rv_unread_mail)
     RecyclerView rv_unread_mail;
 
+    @Bind(R.id.tvMail)
+    TextView tvMail;
+
     @Bind(R.id.rv_schedule)
     RecyclerView rv_schedule;
+
+    @Bind(R.id.tvSchedule)
+    TextView tvSchedule;
+
+    @Bind(R.id.rvCommunity)
+    RecyclerView rvCommunity;
+
+    @Bind(R.id.tvCommunity)
+    TextView tvCommunity;
 
     @Bind(R.id.fl_enabled_applications)
     RecyclerView rvApplication;
@@ -108,6 +129,7 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
     ApplicationAdapter adapter;
     ApprovalAdapter approvalAdapter;
     NoticeAdapter noticeAdapter;
+    NoticeAdapter communityAdapter;
     ScheduleAdapter scheduleAdapter;
     UnreadMailAdapter unreadMailAdapter;
     MenuAdapter menuadapter;
@@ -134,6 +156,7 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
         adapter = new ApplicationAdapter(this);
         approvalAdapter = new ApprovalAdapter(this);
         noticeAdapter = new NoticeAdapter(this);
+        communityAdapter = new NoticeAdapter(this);
         scheduleAdapter = new ScheduleAdapter(this);
         unreadMailAdapter = new UnreadMailAdapter(this);
         menuadapter = new MenuAdapter(this);
@@ -580,6 +603,7 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
         new WebClientAsync_GetScheduleList().execute();
         new WebClientAsync_GetNotices().execute();
         new WebClientAsync_GetUnreadMails().execute();
+        new WebClientAsync_GetCommunityList().execute();
 
     }
 
@@ -591,11 +615,12 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
 
     Application application;
 
-    private List<Application> mListOfApplications;
-    private List<ApprovalDocument> mListOfApprovalDocuments;
-    private List<ScheduleDocument> mListOfScheduleDocuments;
-    private List<Mail> mListOfUnreadMails;
-    private List<NoticeDocument> mListOfNotices;
+    private List<Application> mListOfApplications= new ArrayList<>();
+    private List<ApprovalDocument> mListOfApprovalDocuments = new ArrayList<>();
+    private List<ScheduleDocument> mListOfScheduleDocuments= new ArrayList<>();
+    private List<Mail> mListOfUnreadMails= new ArrayList<>();
+    private List<NoticeDocument> mListOfNotices= new ArrayList<>();
+    private List<Community> mListCommunity= new ArrayList<>();
 
     @Override
     public void onSucess() {
@@ -758,15 +783,61 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            if (!mIsFailed && mIsSuccess) {
-                setListOfApprovalDocuments();
-            }
+            setListOfApprovalDocuments();
+        }
+    }
+
+    private class WebClientAsync_GetCommunityList extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            PreferenceUtilities preferenceUtilities = CrewCloudApplication.getInstance().getPreferenceUtilities();
+
+            WebClient.GetCommunityList(DeviceUtilities.getLanguageCode(), preferenceUtilities.getCurrentMobileSessionId(),
+                     preferenceUtilities.getDomain(), new WebClient.OnWebClientListener() {
+                        @Override
+                        public void onSuccess(JsonNode jsonNode) {
+
+                            try {
+                                if (jsonNode.get("success").asInt() != 1) {
+                                    return;
+                                }
+
+                                JsonNode dataNode = jsonNode.get("data");
+                                Type listType = new TypeToken<ArrayList<Community>>(){}.getType();
+                                List<Community> communities = new Gson().fromJson(dataNode.toString(), listType);
+                                if(communities.size() > 0) {
+                                    mListCommunity = new ArrayList<>();
+                                    mListCommunity.addAll(communities);
+                                }
+
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure() {
+
+                        }
+                    });
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            setListOfCommunity();
         }
     }
 
     private void setListOfApprovalDocuments() {
-
-        approvalAdapter.addAll(mListOfApprovalDocuments);
+        if(Util.checkContainApp(adapter.getList(), Constants.PROJECT_CODE_APPROVAL)) {
+            tvApproval.setVisibility(View.VISIBLE);
+            rv_approval.setVisibility(View.VISIBLE);
+              approvalAdapter.addAll(mListOfApprovalDocuments);
         approvalAdapter.setOnClickItem(new ApprovalAdapter.onClickItemListener() {
             @Override
             public void onClick(int position) {
@@ -779,10 +850,18 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
                 otherListApp(application, String.valueOf(mListOfApprovalDocuments.get(position).ID));
             }
         });
+        } else {
+            tvApproval.setVisibility(View.GONE);
+            rv_approval.setVisibility(View.GONE);
+        }
+
     }
 
     private void setListOfSchedule() {
-        scheduleAdapter.addAll(mListOfScheduleDocuments);
+        if(Util.checkContainApp(adapter.getList(), Constants.PROJECT_CODE_SCHEDULE)) {
+            tvSchedule.setVisibility(View.VISIBLE);
+            rv_schedule.setVisibility(View.VISIBLE);
+             scheduleAdapter.addAll(mListOfScheduleDocuments);
         scheduleAdapter.setOnClickItem(new ScheduleAdapter.onClickItemListener() {
             @Override
             public void onClick(int position) {
@@ -795,11 +874,19 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
                 otherListApp(application, String.valueOf(mListOfScheduleDocuments.get(position).ScheduleNo));
             }
         });
+        } else {
+            tvSchedule.setVisibility(View.GONE);
+            rv_schedule.setVisibility(View.GONE);
+        }
+
 
     }
 
     private void setListOfNotice() {
-        noticeAdapter.addAll(mListOfNotices);
+        if(Util.checkContainApp(adapter.getList(), Constants.PROJECT_CODE_NOTICE)) {
+            tvNotice.setVisibility(View.VISIBLE);
+            rv_notice.setVisibility(View.VISIBLE);
+             noticeAdapter.addAll(mListOfNotices);
         noticeAdapter.setOnClickItem(new NoticeAdapter.onClickItemListener() {
             @Override
             public void onClick(int position) {
@@ -811,10 +898,42 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
                 otherListApp(application, String.valueOf(mListOfNotices.get(position).NoticeNo));
             }
         });
+        } else {
+            tvNotice.setVisibility(View.GONE);
+            rv_notice.setVisibility(View.GONE);
+        }
+
+    }
+
+    private void setListOfCommunity() {
+        if(Util.checkContainApp(adapter.getList(), Constants.PROJECT_CODE_COMMUNITY)) {
+            tvCommunity.setVisibility(View.VISIBLE);
+            rvCommunity.setVisibility(View.VISIBLE);
+            communityAdapter.addAllCommunity(mListCommunity);
+            communityAdapter.setOnClickItem(new NoticeAdapter.onClickItemListener() {
+                @Override
+                public void onClick(int position) {
+                    Application application = new Application();
+                    application.setPackageName("com.crewcloud.apps.crewboard");
+                    application.setApplicationName("Community");
+                    application.setProjectCode(Constants.PROJECT_CODE_COMMUNITY);
+                    application.setApplicationNo(9);
+                    otherListApp(application, String.valueOf(mListCommunity.get(position).getBoardNo()));
+                }
+            });
+            rvCommunity.setAdapter(communityAdapter);
+        } else {
+            tvCommunity.setVisibility(View.GONE);
+            rvCommunity.setVisibility(View.GONE);
+        }
+
     }
 
     private void setListOfUnreadMails() {
-        unreadMailAdapter.addAll(mListOfUnreadMails);
+        if(Util.checkContainApp(adapter.getList(), Constants.PROJECT_CODE_MAIL)) {
+            tvMail.setVisibility(View.VISIBLE);
+            rv_unread_mail.setVisibility(View.VISIBLE);
+            unreadMailAdapter.addAll(mListOfUnreadMails);
         unreadMailAdapter.setOnClickItem(new UnreadMailAdapter.onClickItemListener() {
             @Override
             public void onClick(int position) {
@@ -826,6 +945,11 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
                 otherListApp(application, String.valueOf(mListOfUnreadMails.get(position).MailNo));
             }
         });
+        } else {
+            tvMail.setVisibility(View.GONE);
+            rv_unread_mail.setVisibility(View.GONE);
+        }
+
     }
 
     private class WebClientAsync_GetScheduleList extends AsyncTask<Void, Void, Void> {
@@ -891,9 +1015,7 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            if (!mIsFailed && mIsSuccess) {
-                setListOfSchedule();
-            }
+            setListOfSchedule();
         }
     }
 
@@ -953,9 +1075,7 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            if (!mIsFailed && mIsSuccess) {
-                setListOfUnreadMails();
-            }
+            setListOfUnreadMails();
         }
     }
 
@@ -1013,9 +1133,7 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            if (!mIsFailed && mIsSuccess) {
-                setListOfNotice();
-            }
+            setListOfNotice();
         }
     }
 
@@ -1238,8 +1356,8 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
                             case "DDay":
                                 apkFileName = "CrewDday";
                                 break;
-                            case "Board":
-                                apkFileName = "CrewBoard";
+                            case "Community":
+                                apkFileName = "Community";
                                 break;
                             case "Notice":
                                 apkFileName = "CrewNotice";
@@ -1273,6 +1391,15 @@ public class MainActivityV2 extends BaseActivity implements NavigationView.OnNav
                             intent.setData(Uri.parse("market://details?id=" + "com.dazone.crewdday"));
                             startActivity(intent);
                         } else if (apkFileName.equals("CrewMail")) {
+                            if (mTempDomain.contains("core.crewcloud.net") || mTempDomain.contains("core")) {
+                                Intent intent = new Intent(Intent.ACTION_VIEW);
+                                intent.setData(Uri.parse("market://details?id=" + "com.dazone.crewemail"));
+                                startActivity(intent);
+                            } else {
+                                final String finalApkFileName = apkFileName;
+                                new WebClientAsync_download(finalApkFileName).execute();
+                            }
+                        } else if (apkFileName.equals("Community")) {
                             if (mTempDomain.contains("core.crewcloud.net") || mTempDomain.contains("core")) {
                                 Intent intent = new Intent(Intent.ACTION_VIEW);
                                 intent.setData(Uri.parse("market://details?id=" + "com.dazone.crewemail"));

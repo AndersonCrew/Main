@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.crewcloud.crewmain.R;
 import com.crewcloud.crewmain.activity.BaseActivity;
+import com.crewcloud.crewmain.datamodel.Community;
 import com.crewcloud.crewmain.datamodel.NoticeDocument;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ import butterknife.ButterKnife;
 public class NoticeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private BaseActivity mActivity;
-    private List<NoticeDocument> lstApp = new ArrayList<>();
+    private List<Object> lstApp = new ArrayList<>();
 
     public interface onClickItemListener {
         void onClick(int position);
@@ -41,9 +42,13 @@ public class NoticeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     public void addAll(List<NoticeDocument> comments) {
-        int curr = getItemCount();
         lstApp.addAll(comments);
-        notifyItemRangeInserted(curr, getItemCount());
+        notifyDataSetChanged();
+    }
+
+    public void addAllCommunity(List<Community> comments) {
+        lstApp.addAll(comments);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -91,9 +96,16 @@ public class NoticeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
 
         void bind(int position) {
-            final NoticeDocument noticeDocument = lstApp.get(position);
-            tv_inflate_layout_unread_mail_item_name.setText(noticeDocument.Title);
-            tv_inflate_layout_unread_mail_item_date.setText(noticeDocument.DivisionName);
+            if(lstApp.get(position) instanceof NoticeDocument) {
+                final NoticeDocument noticeDocument = (NoticeDocument) lstApp.get(position);
+                tv_inflate_layout_unread_mail_item_name.setText(noticeDocument.Title);
+                tv_inflate_layout_unread_mail_item_date.setText(noticeDocument.DivisionName);
+            } else if(lstApp.get(position) instanceof Community) {
+                final Community community = (Community) lstApp.get(position);
+                tv_inflate_layout_unread_mail_item_name.setText(community.getTitle());
+                tv_inflate_layout_unread_mail_item_date.setText(community.getRegDateToString());
+            }
+
         }
 
     }

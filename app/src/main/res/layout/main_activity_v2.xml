@@ -72,7 +72,7 @@
 
                 <!--Approval-->
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/textViewApproval"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#F3F3F3"
@@ -93,6 +93,7 @@
 
                 <!--Mail-->
                 <TextView
+                    android:id="@+id/tvMail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#F3F3F3"
@@ -113,6 +114,7 @@
 
                 <!--Schedule-->
                 <TextView
+                    android:id="@+id/tvSchedule"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#F3F3F3"
@@ -134,6 +136,7 @@
 
                 <!--Notice-->
                 <TextView
+                    android:id="@+id/tvNotice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#F3F3F3"
@@ -149,6 +152,29 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_notice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <!--Community-->
+                <TextView
+                    android:id="@+id/tvCommunity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#F3F3F3"
+                    android:paddingBottom="10dp"
+                    android:paddingEnd="0dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="0dp"
+                    android:paddingStart="15dp"
+                    android:paddingTop="10dp"
+                    android:text="@string/community"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvCommunity"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>

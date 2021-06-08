@@ -17,4 +17,9 @@ public class Constants {
     public static final String PROJECT_CODE_COFFEE = "COFFEE";
     public static final String URL_COFFEE = "http://cafe.boditech.co.kr/auth/login";
     public static final String USER_ID = "USER_ID";
+    public static final String PROJECT_CODE_MAIL = "Mail3";
+    public static final String PROJECT_CODE_APPROVAL = "_EAPP";
+    public static final String PROJECT_CODE_SCHEDULE = "Schedule";
+    public static final String PROJECT_CODE_NOTICE = "Notice";
+    public static final String PROJECT_CODE_COMMUNITY = "Board";
 }

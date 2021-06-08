@@ -266,7 +266,8 @@ public class LoginActivity extends BaseActivity {
 
                                 if (Integer.parseInt(jsonD.getString("success")) == 0) {
                                     mIsLogin = false;
-                                    //mErrorMessage = jsonD.get("error").get("message").asText();
+                                    JSONObject jsonError = (JSONObject) jsonD.get("error");
+                                    mErrorMessage = jsonError.getString("message");
                                 } else {
                                     Gson gson = new Gson();
                                     LoginDto result = gson.fromJson(jsonD.getString("data"), LoginDto.class);
@@ -285,14 +286,17 @@ public class LoginActivity extends BaseActivity {
                                 mIsSuccess = false;
                                 mIsFailed = true;
                                 mIsLogin = false;
+                                mErrorMessage = e.getMessage();
                             }
                         }
 
                         @Override
                         public void onLoginFail() {
+                            dismissProgressDialog();
                             mIsSuccess = false;
                             mIsFailed = true;
                             mIsLogin = false;
+                            mErrorMessage = getResources().getString(R.string.connection_falsed);
                         }
                     });
 

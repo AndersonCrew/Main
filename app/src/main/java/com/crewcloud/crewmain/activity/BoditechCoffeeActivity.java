@@ -42,24 +42,26 @@ public class BoditechCoffeeActivity extends BaseActivity {
 
         final String userId = CrewCloudApplication.getInstance().getPreferenceUtilities().getCurrentUserID();
         mWebView = (WebView) findViewById(R.id.webView);
+        mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.getSettings().setLoadWithOverviewMode(true);
+        mWebView.getSettings().setUseWideViewPort(true);
+        mWebView.setWebViewClient(new WebViewClient(){
 
-        mWebView.setWebViewClient(new WebViewClient() {
             @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(mWebView, url);
-
-                Log.d("A", "A");
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
             }
-
             @Override
-            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                Log.d("A", "A");
+            public void onPageFinished(WebView view, final String url) {
             }
         });
 
+
+
         String url = "http://cafe.boditech.co.kr/auth/login";
         String postData = null;
-        postData = "id=kis1";
+        postData = "id=" + userId;
 
         mWebView.postUrl(url, postData.getBytes());
     }

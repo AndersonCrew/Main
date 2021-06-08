@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.crewcloud.crewmain.CrewCloudApplication;
 import com.crewcloud.crewmain.R;
+import com.crewcloud.crewmain.datamodel.Application;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -250,5 +251,14 @@ public class Util {
         CrewCloudApplication.getInstance().getPreferenceUtilities().putStringValue(Constants.DOMAIN, domainCompany);
         CrewCloudApplication.getInstance().getPreferenceUtilities().putStringValue(Constants.COMPANY_NAME, domain);
         return domainCompany;
+    }
+
+    public static boolean checkContainApp(List<Application> list, String projectCode) {
+        for(Application application : list) {
+            if(application.getProjectCode().equals(projectCode)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
